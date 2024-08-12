@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('prospects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('lead_source_id')->nullable();
-            $table->foreign('lead_source_id')->references('id')->on('lead_sources');
+            $table->string('lead_source');
             $table->unsignedBigInteger('assigned_user')->nullable();
             $table->string('contact_name')->nullable();
             $table->string('line_1');

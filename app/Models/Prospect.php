@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\LeadSource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,7 @@ class Prospect extends Model
 
     protected $fillable = [
         'name',
-        'lead_source_id',
+        'lead_source',
         'assigned_user',
         'contact_name',
         'line_1',
@@ -22,5 +23,9 @@ class Prospect extends Model
         'postcode',
         'number',
         'email',
+    ];
+
+    protected $casts = [
+        'lead_source' => LeadSource::class
     ];
 }
