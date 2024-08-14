@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\LeadSource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Prospect extends Model
 {
@@ -13,7 +14,7 @@ class Prospect extends Model
     protected $fillable = [
         'name',
         'lead_source',
-        'assigned_user',
+        'user_id',
         'contact_name',
         'line_1',
         'line_2',
@@ -28,4 +29,9 @@ class Prospect extends Model
     protected $casts = [
         'lead_source' => LeadSource::class
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
