@@ -10,10 +10,11 @@ class ProspectController extends Controller
 {
     public function index()
     {
-        $prospects = Prospect::with('user')->get();
+        $data = [];
 
-        return Inertia::render('Prospects/Index', [
-            'prospects' => $prospects,
-        ]);
+        $data['prospects'] = Prospect::with(['user', 'leadSource'])->get();
+
+        return Inertia::render('Prospects/Index', $data)
+            ->with('replace', true);
     }  
 }

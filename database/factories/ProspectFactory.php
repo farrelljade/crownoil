@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\LeadSource;
+use App\Models\LeadSource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,19 +20,15 @@ class ProspectFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'lead_source' => $this->faker->randomElement([
-                LeadSource::OUTBOUND_PROSPECT_CALL,
-                LeadSource::INBOUND_REFERRAL,
-                LeadSource::INBOUND_WEBSITE,
-                LeadSource::LIVE_CHAT,
-            ]),
-            'assigned_user' => User::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
             'contact_name' => $this->faker->name,
             'line_1' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
             'postcode' => $this->faker->postcode(),
             'number' => $this->faker->phoneNumber(),
-            'email' => $this->faker->email()
+            'email' => $this->faker->email(),
+            'lead_source_id' => LeadSource::inRandomOrder()->first()->id ?? LeadSource::factory()->create()->id,
+
         ];
     }
 }

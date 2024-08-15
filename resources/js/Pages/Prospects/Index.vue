@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage} from '@inertiajs/vue3';
-import { ref, defineAsyncComponent, computed, onMounted } from 'vue';
+import { ref, defineAsyncComponent, computed, onMounted, watch } from 'vue';
 
 const props = defineProps({
     prospects: {
@@ -12,10 +12,6 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    leadSource: {
-        type: Array,
-        required: true,
-    },
 });
 
 const params = ref({
@@ -23,6 +19,14 @@ const params = ref({
 });
 
 const tableData = ref([]);
+
+watch(
+    () => props.prospects,
+    (newProspects) => {
+        tableData.value = newProspects;
+    },
+    { immediate: true }
+);
 
 function resetFilters() {
     params.value.lead_source_id = null;
@@ -36,9 +40,10 @@ onMounted(() => {
     }
 });
 
+
 const latestProspectsHeaders = [
     { title: 'Company Name', key: 'name', sortable: false },
-    { title: 'Lead Source', key: 'lead_source', sortable: false },
+    { title: 'Lead Source', key: 'lead_source.name', sortable: false },
     { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];
@@ -50,7 +55,7 @@ const latestProspectsHeaders = [
 
     <AuthenticatedLayout>
         <v-container>
-            <v-card>
+            <v-card class="mb-2">
                 <v-card-title class="bg-primary mb-5">
                     Prospects
                 </v-card-title>
@@ -101,12 +106,11 @@ const latestProspectsHeaders = [
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-tooltip text="Go To Profile" bottom>
-                                <template v-slot:activator="{ on, attrs }">
+                                <template v-slot:activator="{ props }">
                                     <v-icon
                                         class="mr-2"
                                         color="blue"
-                                        v-bind="attrs"
-                                        v-on="on"
+                                        :="{ props }"
                                     >
                                     mdi-location-enter
                                     </v-icon>

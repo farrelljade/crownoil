@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum LeadSource: string
+enum LeadSourceEnum: string
 {
     case OUTBOUND_PROSPECT_CALL = 'Outbound Prospect Call';
     case INBOUND_REFERRAL = 'Inbound Referral';

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\LeadSource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +12,6 @@ class Prospect extends Model
 
     protected $fillable = [
         'name',
-        'lead_source',
         'user_id',
         'contact_name',
         'line_1',
@@ -24,14 +22,24 @@ class Prospect extends Model
         'postcode',
         'number',
         'email',
-    ];
-
-    protected $casts = [
-        'lead_source' => LeadSource::class
+        'lead_source_id'
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function leadSource(): BelongsTo
+    {
+        return $this->belongsTo(LeadSource::class, 'lead_source_id');
+    }
+
+    /**
+     * Helper method to get the lead source name directly.
+     */
+    public function getLeadSourceNameAttribute(): ?string
+    {
+        return $this->leadSource?->name;
     }
 }
