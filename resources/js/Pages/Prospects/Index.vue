@@ -1,45 +1,42 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage} from '@inertiajs/vue3';
-import { ref, defineAsyncComponent, computed, onMounted, watch } from 'vue';
+import { ref, defineAsyncComponent, computed } from 'vue';
 
 const props = defineProps({
     prospects: {
         type: Array,
-        required: true,
+        required: true
     },
     filters: {
         type: Object,
-        required: true,
+        required: true
     },
+    users: {
+        type: Array,
+        required: true
+    },
+    leadSource: {
+        type: Array,
+        required: true
+    }
 });
 
 const params = ref({
     lead_source_id: null,
+    user_id: null
 });
 
-const tableData = ref([]);
-
-watch(
-    () => props.prospects,
-    (newProspects) => {
-        tableData.value = newProspects;
-    },
-    { immediate: true }
-);
+const tableData = computed(() => {
+    return props.prospects.filter(prospect => {
+        return (!params.value.lead_source_id || prospect.lead_source_id === params.value.lead_source_id)
+            && (!params.value.user_id || prospect.user_id === params.value.user_id);
+    });
+});
 
 function resetFilters() {
     params.value.lead_source_id = null;
 }
-
-onMounted(() => {
-    tableData.value = props.prospects;
-
-    if (props.filters.lead_source_id) {
-        params.value.lead_source_id = parseInt(props.filters.lead_source_id);
-    }
-});
-
 
 const latestProspectsHeaders = [
     { title: 'Company Name', key: 'name', sortable: false },
@@ -62,6 +59,19 @@ const latestProspectsHeaders = [
 
                 <v-card-text class="mb-4">
                     <v-row>
+                        <v-col cols="6" md="3" class="pb-0">
+                            <v-autocomplete
+                                class="mt-2"
+                                density="compact"
+                                v-model="params.user_id"
+                                label="Assigned User"
+                                :items="users"
+                                item-value="id"
+                                item-title="name"
+                                hide-details
+                                clearable
+                            />
+                        </v-col>
                         <v-col cols="6" md="3" class="pb-0">
                             <v-autocomplete
                                 class="mt-2"
@@ -109,7 +119,7 @@ const latestProspectsHeaders = [
                                 <template v-slot:activator="{ props }">
                                     <v-icon
                                         class="mr-2"
-                                        color="blue"
+                                        color="green"
                                         :="{ props }"
                                     >
                                     mdi-location-enter
