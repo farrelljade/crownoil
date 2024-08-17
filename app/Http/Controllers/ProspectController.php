@@ -17,11 +17,18 @@ class ProspectController extends Controller
         $data['users'] = User::all();
         $data['leadSource'] = LeadSource::all();
         $data['filters'] = $request->all();
-        // Only get specific column from Prospect and related Models
+        // Only get specific columns from Prospect and related Models
         $data['prospects'] = Prospect::with(['user:id,name', 'leadSource:id,name'])
             ->get(['id', 'name', 'user_id', 'lead_source_id']);
 
         return Inertia::render('Prospects/Index', $data)
             ->with('replace', true);
-    }  
+    }
+
+    public function show(Prospect $prospect)
+    {
+        return Inertia::render('Prospects/Show', [
+            'prospect' => $prospect->load(['user:id,name,email', 'leadSource:id,name'])
+        ]);
+    }
 }

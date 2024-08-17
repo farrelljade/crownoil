@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage} from '@inertiajs/vue3';
-import { ref, defineAsyncComponent, computed } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
     prospects: {
@@ -53,13 +53,21 @@ const latestProspectsHeaders = [
     <AuthenticatedLayout>
         <v-container>
             <v-card class="mb-2">
-                <v-card-title class="bg-primary mb-5">
-                    Prospects
+                <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                    <span>Prospects</span>
+                    <v-tooltip text="Add Prospect">
+                        <template v-slot:activator="{ props }">
+                            <v-icon color="white" :="props">
+                                mdi-plus
+                            </v-icon>
+                        </template>
+                    </v-tooltip>
                 </v-card-title>
+                
 
                 <v-card-text class="mb-4">
                     <v-row>
-                        <v-col cols="6" md="3" class="pb-0">
+                        <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
                                 density="compact"
@@ -72,7 +80,7 @@ const latestProspectsHeaders = [
                                 clearable
                             />
                         </v-col>
-                        <v-col cols="6" md="3" class="pb-0">
+                        <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
                                 density="compact"
@@ -101,29 +109,24 @@ const latestProspectsHeaders = [
                 </v-card-text>
             </v-card>
             
-            <v-card id="prospectTableData">
+            <v-card>
                 <v-card-text>
                     <v-data-table
                         :headers="latestProspectsHeaders"
                         :items="tableData"
                         class="elevation-3"
-                        id="prospectTable"
                     >
                         <template v-slot:item.lead_source="{ item }">
-                            <span>
-                                {{ item.lead_source }}
-                            </span>
+                            {{ item.lead_source }}
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-tooltip text="Go To Profile" bottom>
                                 <template v-slot:activator="{ props }">
-                                    <v-icon
-                                        class="mr-2"
-                                        color="green"
-                                        :="{ props }"
-                                    >
-                                    mdi-location-enter
-                                    </v-icon>
+                                    <Link :href="route('prospects.show', item.id)">
+                                        <v-icon color="green" :="props">
+                                            mdi-location-enter
+                                        </v-icon>
+                                    </Link>
                                 </template>
                             </v-tooltip>
                         </template>
