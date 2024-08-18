@@ -24,19 +24,21 @@ const props = defineProps({
 
 const params = ref({
     lead_source_id: null,
-    user_id: null
+    user_id: null,
+    name: null
 });
 
 const tableData = computed(() => {
     return props.prospects.filter(prospect => {
         return (!params.value.lead_source_id || prospect.lead_source_id === params.value.lead_source_id)
-            && (!params.value.user_id || prospect.user_id === params.value.user_id);
+            && (!params.value.user_id || prospect.user_id === params.value.user_id)
+            && (!params.value.name || prospect.name === params.value.name);
     });
 });
 
-function resetFilters() {
-    params.value.lead_source_id = null;
-}
+// function resetFilters() {
+//     params.value.lead_source_id = null;
+// }
 
 const latestProspectsHeaders = [
     { title: 'Company Name', key: 'name', sortable: false },
@@ -52,7 +54,7 @@ const latestProspectsHeaders = [
 
     <AuthenticatedLayout>
         <v-container>
-            <v-card class="mb-2">
+            <v-card class="mb-2 pa-3">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     <span>Prospects</span>
                     <v-tooltip text="Add Prospect">
@@ -65,12 +67,23 @@ const latestProspectsHeaders = [
                 </v-card-title>
                 
 
-                <v-card-text class="mb-4">
+                <v-card-text>
                     <v-row>
                         <v-col cols="6" md="3">
                             <v-autocomplete
+                                class="mt-2"  
+                                v-model="params.name"
+                                label="Company Name"
+                                :items="prospects"
+                                item-value="id"
+                                item-title="name"
+                                hide-details
+                                clearable
+                            />
+                        </v-col>
+                        <v-col cols="6" md="3">
+                            <v-autocomplete
                                 class="mt-2"
-                                density="compact"
                                 v-model="params.user_id"
                                 label="Assigned User"
                                 :items="users"
@@ -83,7 +96,6 @@ const latestProspectsHeaders = [
                         <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
-                                density="compact"
                                 v-model="params.lead_source_id"
                                 label="Lead Source"
                                 :items="leadSource"
@@ -116,6 +128,9 @@ const latestProspectsHeaders = [
                         :items="tableData"
                         class="elevation-3"
                     >
+                        <template v-slot:item.name="{ item }">
+                            {{ item.name }}
+                        </template>
                         <template v-slot:item.lead_source="{ item }">
                             {{ item.lead_source }}
                         </template>
