@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
+import App from '@/App.vue';
 
 const props = defineProps({
     prospects: {
@@ -36,10 +37,6 @@ const tableData = computed(() => {
     });
 });
 
-// function resetFilters() {
-//     params.value.lead_source_id = null;
-// }
-
 const latestProspectsHeaders = [
     { title: 'Company Name', key: 'name', sortable: false },
     { title: 'Lead Source', key: 'lead_source.name', sortable: false },
@@ -52,20 +49,23 @@ const latestProspectsHeaders = [
 <template>
     <Head title="Prospects" />
 
-    <AuthenticatedLayout>
-        <v-container>
+    <App>
+        <v-container fluid>
             <v-card class="mb-2 pa-3">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     <span>Prospects</span>
                     <v-tooltip text="Add Prospect">
                         <template v-slot:activator="{ props }">
-                            <v-icon color="white" :="props">
+                            <v-icon
+                                color="white"
+                                :="props"
+                                @click="dialog.value = true"
+                            >
                                 mdi-plus
                             </v-icon>
                         </template>
                     </v-tooltip>
                 </v-card-title>
-                
 
                 <v-card-text>
                     <v-row>
@@ -149,5 +149,5 @@ const latestProspectsHeaders = [
                 </v-card-text>
             </v-card>
         </v-container>
-    </AuthenticatedLayout>
+    </App>
 </template>

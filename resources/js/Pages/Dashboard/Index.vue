@@ -1,7 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { defineAsyncComponent } from 'vue';
+import App from '@/App.vue';
 
 const ProspectList = defineAsyncComponent(
     () => import('@/Pages/Dashboard/Components/ProspectList.vue')
@@ -18,10 +18,11 @@ const props = defineProps({
 <template>
     <Head title="Prospects" />
 
-    <AuthenticatedLayout>
-        <!-- Load the ProspectList component -->
-        <div class="mb-6">
-            <ProspectList :prospects="prospects" />
-        </div>
-    </AuthenticatedLayout>
+    <App>
+        <template v-slot:default>
+            <div>
+                <ProspectList :prospects="prospects" />
+            </div>
+        </template>
+    </App>
 </template>

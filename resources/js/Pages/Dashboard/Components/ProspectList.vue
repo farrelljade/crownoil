@@ -32,7 +32,7 @@ const latestProspectsHeaders = [
 
 <template>
     <Head title="Prospects" />
-    <v-container>
+    <v-container fluid>
         <v-card class="mb-2 pa-3" style="max-width: 800px">
             <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                 <span>Prospects - {{ user.name }}</span>

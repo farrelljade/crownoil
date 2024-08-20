@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import App from '@/App.vue';
 
 const props = defineProps({
     prospect: {
@@ -13,9 +14,9 @@ const props = defineProps({
 <template>
     <Head :title="'Profile - ' + prospect.name" />
 
-    <AuthenticatedLayout>
+    <App>
         <v-container fluid>
-            <v-card class="mb-2 pa-3" style="max-width: 800px">
+            <v-card class="mb-2 pa-3" style="max-width: 600px">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     Invoice Details: {{ prospect.name }}
                 </v-card-title>
@@ -83,5 +84,5 @@ const props = defineProps({
                 </v-card-text>
             </v-card>
         </v-container>
-    </AuthenticatedLayout>
+    </App>
 </template>
