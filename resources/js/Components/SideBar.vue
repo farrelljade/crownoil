@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { usePage, Link } from '@inertiajs/vue3';  // Import Link from Inertia.js
+import { usePage, Link } from '@inertiajs/vue3';
 
 const drawer = ref(true);
 const rail = ref(true);
@@ -18,11 +18,8 @@ const { props } = usePage();
     >
         <v-flex class="d-flex flex-column justify-space-between" style="height: 100%;">
             <div>
-                <!-- User Info -->
                 <v-list-item class="align-self-center mb-2" v-if="rail">
-                    <v-list-item-icon>
-                        <v-icon color="grey">mdi-account</v-icon>
-                    </v-list-item-icon>
+                    <v-icon color="grey">mdi-account</v-icon>
                 </v-list-item>
 
                 <v-list-item class="align-self-center ml-2" v-else="!rail"

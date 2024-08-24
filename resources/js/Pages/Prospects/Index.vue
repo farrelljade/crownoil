@@ -1,8 +1,10 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import App from '@/App.vue';
+import AddProspect from '@/Pages/Prospects/Components/AddProspect.vue';
+
+const dialog = ref(false);
 
 const props = defineProps({
     prospects: {
@@ -43,7 +45,6 @@ const latestProspectsHeaders = [
     { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];
-
 </script>
 
 <template>
@@ -56,13 +57,14 @@ const latestProspectsHeaders = [
                     <span>Prospects</span>
                     <v-tooltip text="Add Prospect">
                         <template v-slot:activator="{ props }">
-                            <v-icon
-                                color="white"
-                                :="props"
-                                @click="dialog.value = true"
+                            <v-btn
+                                density="compact"
+                                color="primary"
+                                icon="mdi-plus"
+                                v-bind="props"
+                                @click="dialog = true"
                             >
-                                mdi-plus
-                            </v-icon>
+                            </v-btn>
                         </template>
                     </v-tooltip>
                 </v-card-title>
@@ -71,7 +73,7 @@ const latestProspectsHeaders = [
                     <v-row>
                         <v-col cols="6" md="3">
                             <v-autocomplete
-                                class="mt-2"  
+                                class="mt-2"
                                 v-model="params.name"
                                 label="Company Name"
                                 :items="prospects"
@@ -120,7 +122,7 @@ const latestProspectsHeaders = [
                     </v-row>
                 </v-card-text>
             </v-card>
-            
+
             <v-card>
                 <v-card-text>
                     <v-data-table
@@ -138,7 +140,7 @@ const latestProspectsHeaders = [
                             <v-tooltip text="Go To Profile" bottom>
                                 <template v-slot:activator="{ props }">
                                     <Link :href="route('prospects.show', item.id)">
-                                        <v-icon color="green" :="props">
+                                        <v-icon color="green" v-bind="props">
                                             mdi-location-enter
                                         </v-icon>
                                     </Link>
@@ -149,5 +151,17 @@ const latestProspectsHeaders = [
                 </v-card-text>
             </v-card>
         </v-container>
+
+        <v-dialog v-model="dialog">
+            <v-card>
+                <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                    <span class="headline">New Prospect</span>
+                </v-card-title>
+                <v-card-text>
+                    <AddProspect @close="dialog = false" :leadSources="leadSource" :users="users" />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </App>
 </template>
+
