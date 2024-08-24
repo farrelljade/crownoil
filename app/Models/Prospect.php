@@ -14,12 +14,6 @@ class Prospect extends Model
         'name',
         'user_id',
         'contact_name',
-        'line_1',
-        'line_2',
-        'line_3',
-        'city',
-        'county',
-        'postcode',
         'number',
         'email',
         'lead_source_id'

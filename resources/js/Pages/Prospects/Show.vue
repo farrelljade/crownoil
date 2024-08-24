@@ -18,7 +18,7 @@ const props = defineProps({
         <v-container fluid>
             <v-card class="mb-2 pa-3" style="max-width: 600px">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-                    Invoice Details: {{ prospect.name }}
+                    Contact Details: {{ prospect.name }}
                 </v-card-title>
 
                 <v-card-text>
@@ -28,7 +28,7 @@ const props = defineProps({
                                 prepend-icon="mdi-home-floor-1"
                                 label="Line 1"
                                 v-model="prospect.line_1"
-                                disabled
+                                readonly
                             />
                         </v-col>
                         <v-col cols="12" md="6">
@@ -45,23 +45,24 @@ const props = defineProps({
                                 prepend-icon="mdi-city"
                                 label="City"
                                 v-model="prospect.city"
-                                disabled
+                                readonly
                             />
                         </v-col>
                         <v-col cols="12" md="6">
                             <v-text-field
-                            prepend-icon="mdi-image-area"
+                                prepend-icon="mdi-image-area"
                                 label="County"
                                 v-model="prospect.county"
-                                disabled
+                                :readonly="!!prospect.county"
+                                :disabled="!prospect.county"
                             />
                         </v-col>
                         <v-col cols="12" md="6">
                             <v-text-field
-                            prepend-icon="mdi-post"
+                                prepend-icon="mdi-post"
                                 label="Postcode"
                                 v-model="prospect.postcode"
-                                disabled
+                                readonly
                             />
                         </v-col>
                         <v-col cols="12" md="6">
@@ -69,7 +70,7 @@ const props = defineProps({
                                 prepend-icon="mdi-phone"
                                 label="Tel"
                                 v-model="prospect.number"
-                                disabled
+                                readonly
                             />
                         </v-col>
                         <v-col cols="12" md="6">
@@ -77,7 +78,7 @@ const props = defineProps({
                                 prepend-icon="mdi-email"
                                 label="Email"
                                 v-model="prospect.email"
-                                disabled
+                                readonly
                             />
                         </v-col>
                     </v-row>
