@@ -120,7 +120,6 @@ const submitForm = () => {
                 <v-col cols="12" md="4">
                     <v-text-field
                         v-model="form.number"
-                        type="number"
                         label="Contact Number"
                         required
                     />

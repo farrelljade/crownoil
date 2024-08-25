@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Prospect extends Model
 {
@@ -16,7 +17,7 @@ class Prospect extends Model
         'contact_name',
         'number',
         'email',
-        'lead_source_id'
+        'lead_source_id',
     ];
 
     public function user(): BelongsTo
@@ -35,5 +36,10 @@ class Prospect extends Model
     public function getLeadSourceNameAttribute(): ?string
     {
         return $this->leadSource?->name;
+    }
+
+    public function address(): HasOne
+    {
+        return $this->hasOne(Address::class);
     }
 }
