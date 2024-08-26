@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 import App from '@/App.vue';
 import AddProspect from '@/Pages/Prospects/Components/AddProspect.vue';
 
@@ -61,7 +61,7 @@ const latestProspectsHeaders = [
                                 density="compact"
                                 color="primary"
                                 icon="mdi-plus"
-                                v-bind="props"
+                                :="props"
                                 @click="dialog = true"
                             >
                             </v-btn>
@@ -152,13 +152,13 @@ const latestProspectsHeaders = [
             </v-card>
         </v-container>
 
-        <v-dialog v-model="dialog">
+        <v-dialog v-model="dialog" max-width="900px">
             <v-card>
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     <span class="headline">New Prospect</span>
                 </v-card-title>
                 <v-card-text>
-                    <AddProspect @close="dialog = false" :leadSources="leadSource" :users="users" />
+                    <AddProspect @close="dialog = false" :leadSource="leadSource" :users="users" />
                 </v-card-text>
             </v-card>
         </v-dialog>

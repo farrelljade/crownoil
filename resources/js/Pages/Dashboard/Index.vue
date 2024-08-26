@@ -11,7 +11,15 @@ const props = defineProps({
     prospects: {
         type: Array,
         required: true,
-    }
+    },
+    users: {
+        type: Array,
+        required: true,
+    },
+    leadSource: {
+        type: Array,
+        required: true,
+    },
 });
 </script>
 
@@ -21,7 +29,7 @@ const props = defineProps({
     <App>
         <template v-slot:default>
             <div>
-                <ProspectList :prospects="prospects" />
+                <ProspectList :prospects="prospects" :users="users" :leadSource="leadSource" />
             </div>
         </template>
     </App>

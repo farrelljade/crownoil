@@ -20,7 +20,7 @@ const form = useForm({
 });
 
 const props = defineProps({
-    leadSources: {
+    leadSource: {
         type: Array,
         required: true,
     },
@@ -30,11 +30,13 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['close']);
+
 const submitForm = () => {
     form.post('/prospects', {
         onSuccess: () => {
             form.reset();
-            dialog.value = false;
+            emit('close');
         },
     });
 };
@@ -54,7 +56,7 @@ const submitForm = () => {
                 <v-col cols="12" md="4">
                     <v-autocomplete
                         v-model="form.lead_source_id"
-                        :items="leadSources"
+                        :items="leadSource"
                         item-value="id"
                         item-title="name"
                         label="Lead Source"

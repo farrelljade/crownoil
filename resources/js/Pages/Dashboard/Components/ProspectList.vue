@@ -1,6 +1,9 @@
 <script setup>
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import {computed, ref} from 'vue';
+import AddProspect from "@/Pages/Prospects/Components/AddProspect.vue";
+
+const dialog = ref(false);
 
 const { props: pageProps } = usePage();
 
@@ -8,6 +11,14 @@ const user = computed(() => pageProps.auth.user);
 
 const props = defineProps({
     prospects: {
+        type: Array,
+        required: true
+    },
+    users: {
+        type: Array,
+        required: true
+    },
+    leadSource: {
         type: Array,
         required: true
     }
@@ -32,19 +43,25 @@ const latestProspectsHeaders = [
 
 <template>
     <Head title="Prospects" />
+
     <v-container fluid>
         <v-card class="mb-2 pa-3" style="max-width: 800px">
             <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-                <span>Prospects - {{ user.name }}</span>
+                <span>{{ user.name }}'s Prospect List</span>
                 <v-tooltip text="Add Prospect">
                     <template v-slot:activator="{ props }">
-                        <v-icon color="white" :="props">
-                            mdi-plus
-                        </v-icon>
+                        <v-btn
+                            density="compact"
+                            color="primary"
+                            icon="mdi-plus"
+                            :="props"
+                            @click="dialog = true"
+                        >
+                        </v-btn>
                     </template>
                 </v-tooltip>
             </v-card-title>
-        
+
             <v-card-text>
                 <v-data-table
                     :headers="latestProspectsHeaders"
@@ -71,4 +88,15 @@ const latestProspectsHeaders = [
             </v-card-text>
         </v-card>
     </v-container>
+
+    <v-dialog v-model="dialog" max-width="900px">
+        <v-card>
+            <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                <span class="headline">New Prospect</span>
+            </v-card-title>
+            <v-card-text>
+                <AddProspect @close="dialog = false" :leadSource="leadSource" :users="users" />
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
