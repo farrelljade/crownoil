@@ -1,5 +1,4 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import App from '@/App.vue';
 
@@ -16,6 +15,14 @@ const props = defineProps({
 
     <App>
         <v-container fluid>
+            <v-breadcrumbs
+                class="bg-primary mb-5"
+                :items="['Foo', 'Bar', 'Fizz']"
+            >
+                <template v-slot:divider>
+                    <v-icon icon="mdi-chevron-right"></v-icon>
+                </template>
+            </v-breadcrumbs>
             <v-card class="mb-2 pa-3" style="max-width: 600px">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     Contact Details: {{ prospect.name }}

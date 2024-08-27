@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Enums\LeadSourceEnum;
-use App\Models\LeadSource;
+use App\Enums\ProductEnum;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class LeadSourceSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        foreach (LeadSourceEnum::cases() as $source) {
-            LeadSource::updateOrCreate(['name' => $source->value]);
+        foreach (ProductEnum::cases() as $product) {
+            Product::updateOrCreate(['name' => $product->value]);
         }
     }
 }

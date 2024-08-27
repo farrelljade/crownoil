@@ -158,7 +158,11 @@ const latestProspectsHeaders = [
                     <span class="headline">New Prospect</span>
                 </v-card-title>
                 <v-card-text>
-                    <AddProspect @close="dialog = false" :leadSource="leadSource" :users="users" />
+                    <AddProspect
+                        @close="dialog = false"
+                        :leadSource="leadSource"
+                        :users="users"
+                    />
                 </v-card-text>
             </v-card>
         </v-dialog>

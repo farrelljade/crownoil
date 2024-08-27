@@ -51,6 +51,13 @@ const { props } = usePage();
                         title="Prospects"
                         value="prospects"
                     ></v-list-item>
+
+                    <v-list-item
+                        :href="route('orders.index')"
+                        prepend-icon="mdi-shopping"
+                        title="Orders"
+                        value="orders"
+                    ></v-list-item>
                 </v-list>
             </div>
 
