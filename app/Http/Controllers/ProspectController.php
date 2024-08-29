@@ -16,7 +16,7 @@ class ProspectController extends Controller
     {
         $data = $this->getCommonData($request);
 
-        return Inertia::render('Prospects/Index', $data);
+        return Inertia::render('Prospects/ProspectsPage', $data);
     }
 
     public function show(Prospect $prospect): Response

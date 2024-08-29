@@ -21,7 +21,7 @@ class OrderController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        return Inertia::render('Orders/Index', $data);
+        return Inertia::render('Orders/OrdersPage', $data);
     }
 
     public function create(): Response
