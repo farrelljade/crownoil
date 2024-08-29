@@ -11,10 +11,10 @@ const props = defineProps({
         type: Array,
         required: true
     },
-    filters: {
-        type: Object,
-        required: true
-    },
+    // filters: {
+    //     type: Object,
+    //     required: true
+    // },
     users: {
         type: Array,
         required: true
@@ -40,9 +40,9 @@ const tableData = computed(() => {
 });
 
 const latestProspectsHeaders = [
+    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Company Name', key: 'name', sortable: false },
     { title: 'Lead Source', key: 'lead_source.name', sortable: false },
-    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];
 </script>
@@ -74,9 +74,9 @@ const latestProspectsHeaders = [
                         <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
-                                v-model="params.name"
-                                label="Company Name"
-                                :items="prospects"
+                                v-model="params.user_id"
+                                label="Assigned User"
+                                :items="users"
                                 item-value="id"
                                 item-title="name"
                                 hide-details
@@ -86,9 +86,9 @@ const latestProspectsHeaders = [
                         <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
-                                v-model="params.user_id"
-                                label="Assigned User"
-                                :items="users"
+                                v-model="params.name"
+                                label="Company Name"
+                                :items="prospects"
                                 item-value="id"
                                 item-title="name"
                                 hide-details

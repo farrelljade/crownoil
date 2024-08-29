@@ -17,6 +17,7 @@ class OrderController extends Controller
         $data = $this->getCommonData();
 
         $data['orders'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
             ->orderBy('created_at')
             ->get();
 
@@ -38,6 +39,7 @@ class OrderController extends Controller
             'quantity' => 'required|integer|min:1',
             'ppl' => 'required|numeric|min:0',
             'total' => 'required|numeric|min:0',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         Order::create($request->all());

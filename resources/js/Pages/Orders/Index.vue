@@ -22,6 +22,10 @@ const props = defineProps({
     prospects: {
         type: Array,
         required: true
+    },
+    users: {
+        type: Array,
+        required: true
     }
 });
 
@@ -40,11 +44,13 @@ const tableData = computed(() => {
 });
 
 const latestOrdersHeaders = [
-    { title: 'Product', key: 'product.name', sortable: false },
+    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Prospect', key: 'prospect.name', sortable: false },
+    { title: 'Product', key: 'product.name', sortable: false },
     { title: 'Quantity', key: 'quantity', sortable: false },
     { title: 'PPL', key: 'ppl', sortable: false },
     { title: 'Total', key: 'total', sortable: false },
+    { title: 'Created At', key: 'created_at', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];
 
@@ -80,8 +86,25 @@ const latestOrdersHeaders = [
                         :items="tableData"
                         class="elevation-3"
                     >
+                        <template v-slot:item.user.name="{ item }">
+                            {{ item.user.name }}
+                        </template>
                         <template v-slot:item.product.name="{ item }">
                             {{ item.product.name }}
+                        </template>
+                        <template v-slot:item.prospect.name="{ item }">
+                            {{ item.prospect.name }}
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-tooltip text="Go To Profile" bottom>
+                                <template v-slot:activator="{ props }">
+                                    <Link :href="route('prospects.show', item.id)">
+                                        <v-icon color="green" v-bind="props">
+                                            mdi-location-enter
+                                        </v-icon>
+                                    </Link>
+                                </template>
+                            </v-tooltip>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -98,6 +121,7 @@ const latestOrdersHeaders = [
                         @close="dialog = false"
                         :products="products"
                         :prospects="prospects"
+                        :users="users"
                     />
                 </v-card-text>
             </v-card>

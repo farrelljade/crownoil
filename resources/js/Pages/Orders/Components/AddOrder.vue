@@ -5,6 +5,7 @@ import { useForm } from '@inertiajs/vue3';
 const dialog = ref(false);
 
 const form = useForm({
+    user_id: null,
     prospect_id: null,
     product_id: null,
     quantity: null,
@@ -21,24 +22,11 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    users: {
+        type: Array,
+        required: true,
+    },
 });
-
-const simpleProducts = [
-    { id: 1, name: 'Product A' },
-    { id: 2, name: 'Product B' }
-];
-
-const simpleProspects = [
-    { id: 1, name: 'Prospect A' },
-    { id: 2, name: 'Prospect B' }
-];
-
-console.log('Simple Products:', simpleProducts);
-console.log('Simple Prospects:', simpleProspects);
-
-
-console.log('Products:', props.products);
-console.log('Prospects:', props.prospects);
 
 const emit = defineEmits(['close']);
 
@@ -56,6 +44,16 @@ const submitForm = () => {
     <v-form @submit.prevent="submitForm">
         <v-container fluid>
             <v-row>
+                <v-col cols="12" md="4">
+                    <v-autocomplete
+                        v-model="form.user_id"
+                        :items="users"
+                        item-value="id"
+                        item-title="name"
+                        label="Assigned User"
+                        required
+                    />
+                </v-col>
                 <v-col cols="12" md="4">
                     <v-autocomplete
                         v-model="form.prospect_id"

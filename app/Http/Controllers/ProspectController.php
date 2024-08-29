@@ -14,19 +14,7 @@ class ProspectController extends Controller
 {
     public function index(Request $request): Response
     {
-        $data = [];
-
-        $data['users'] = User::query()
-            ->orderBy('name', 'desc')
-            ->get();
-        $data['leadSource'] = LeadSource::query()
-            ->orderBy('name', 'desc')
-            ->get();
-        $data['filters'] = $request->all();
-        // Only get specific columns from Prospect and related Models
-        $data['prospects'] = Prospect::with(['user:id,name', 'leadSource:id,name'])
-            ->orderBy('created_at', 'desc')
-            ->get(['id', 'name', 'user_id', 'lead_source_id']);
+        $data = $this->getCommonData($request);
 
         return Inertia::render('Prospects/Index', $data);
     }
@@ -74,4 +62,23 @@ class ProspectController extends Controller
 
         return redirect()->route('prospects.index');
     }
+
+    private function getCommonData(Request $request): array
+    {
+        $data['users'] = User::query()
+            ->orderBy('name')
+            ->get();
+        $data['leadSource'] = LeadSource::query()
+            ->orderBy('name')
+            ->get();
+        $data['filters'] = $request->all();
+        // Only get specific columns from Prospect and related Models
+        $data['prospects'] = Prospect::query()
+            ->with(['user:id,name', 'leadSource:id,name'])
+            ->orderBy('name')
+            ->get(['id', 'name', 'user_id', 'lead_source_id']);
+
+        return $data;
+    }
+
 }
