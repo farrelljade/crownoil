@@ -11,15 +11,15 @@ const props = defineProps({
         type: Array,
         required: true
     },
-    // filters: {
-    //     type: Object,
-    //     required: true
-    // },
     users: {
         type: Array,
         required: true
     },
     leadSource: {
+        type: Array,
+        required: true
+    },
+    prospectName: {
         type: Array,
         required: true
     }
@@ -28,14 +28,14 @@ const props = defineProps({
 const params = ref({
     lead_source_id: null,
     user_id: null,
-    name: null
+    prospect_name: null
 });
 
 const tableData = computed(() => {
-    return props.prospects.filter(prospect => {
-        return (!params.value.lead_source_id || prospect.lead_source_id === params.value.lead_source_id)
-            && (!params.value.user_id || prospect.user_id === params.value.user_id)
-            && (!params.value.name || prospect.name === params.value.name);
+    return props.prospects.filter(item => {
+        return (!params.value.prospect_name || item.name === params.value.prospect_name)
+            && (!params.value.user_id || item.user_id === params.value.user_id)
+            && (!params.value.lead_source_id || item.lead_source_id === params.value.lead_source_id);
     });
 });
 
@@ -86,10 +86,10 @@ const latestProspectsHeaders = [
                         <v-col cols="6" md="3">
                             <v-autocomplete
                                 class="mt-2"
-                                v-model="params.name"
+                                v-model="params.prospect_name"
                                 label="Company Name"
-                                :items="prospects"
-                                item-value="id"
+                                :items="prospectName"
+                                item-value="name"
                                 item-title="name"
                                 hide-details
                                 clearable
@@ -133,8 +133,11 @@ const latestProspectsHeaders = [
                         <template v-slot:item.name="{ item }">
                             {{ item.name }}
                         </template>
+                        <template v-slot:item.user.name="{ item }">
+                            {{ item.user.name }}
+                        </template>
                         <template v-slot:item.lead_source="{ item }">
-                            {{ item.lead_source }}
+                            {{ item.lead_source.name }}
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-tooltip text="Go To Profile" bottom>

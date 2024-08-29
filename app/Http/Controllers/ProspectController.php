@@ -71,7 +71,9 @@ class ProspectController extends Controller
         $data['leadSource'] = LeadSource::query()
             ->orderBy('name')
             ->get();
-        $data['filters'] = $request->all();
+        $data['prospectName'] = Prospect::query()
+            ->orderBy('name')
+            ->get();
         // Only get specific columns from Prospect and related Models
         $data['prospects'] = Prospect::query()
             ->with(['user:id,name', 'leadSource:id,name'])
