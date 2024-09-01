@@ -21,14 +21,10 @@ class ProspectFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'user_id' => User::inRandomOrder()->first()->id,
-            'contact_name' => $this->faker->name,
-            'line_1' => $this->faker->streetAddress(),
-            'city' => $this->faker->city(),
-            'postcode' => $this->faker->postcode(),
+            'contact_name' => $this->faker->name(),
             'number' => $this->faker->phoneNumber(),
             'email' => $this->faker->email(),
             'lead_source_id' => LeadSource::inRandomOrder()->first()->id ?? LeadSource::factory()->create()->id,
-
         ];
     }
 }

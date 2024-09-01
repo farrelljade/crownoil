@@ -24,7 +24,7 @@ class OrderController extends Controller
         return Inertia::render('Orders/OrdersPage', $data);
     }
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
         $data = $this->getCommonData();
 
@@ -58,8 +58,9 @@ class OrderController extends Controller
             ->orderBy('name')
             ->get(['id', 'name']);
         $data['prospects'] = Prospect::query()
+            ->with('user:id,name')
             ->orderBy('name')
-            ->get(['id', 'name']);
+            ->get(['id', 'user_id', 'name']);
 
         return $data;
     }

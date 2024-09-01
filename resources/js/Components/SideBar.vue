@@ -1,16 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
+import {createCookie, readCookie} from "@/helpers.js";
 
 const drawer = ref(true);
 const rail = ref(true);
 
 const { props } = usePage();
+
+function updateSidebarCookie(state) {
+    createCookie('sidebar_open', state ? 'true' : 'false', 7);
+}
+
+onMounted(() => {
+    const sidebarState = readCookie('sidebar_open');
+    if (sidebarState !== null) {
+        drawer.value = sidebarState === 'true';
+    } else {
+        drawer.value = true;
+    }
+});
+
+watch(drawer, (newVal) => {
+    updateSidebarCookie(newVal);
+});
 </script>
 
 <template>
     <v-navigation-drawer
         v-model="drawer"
+        width="200"
         :rail="rail"
         permanent
         @click="rail = false"
@@ -22,7 +41,7 @@ const { props } = usePage();
                     <v-icon color="grey">mdi-account</v-icon>
                 </v-list-item>
 
-                <v-list-item class="align-self-center ml-2" v-else="!rail"
+                <v-list-item class="align-self-center ml-2" v-else
                     :title="`Hello, ${props.auth.user.name}`"
                     nav
                 >
@@ -65,7 +84,7 @@ const { props } = usePage();
                 <v-icon color="red">mdi-logout</v-icon>
             </v-list-item>
 
-            <v-list-item class="align-self-center mb-2" v-else="!rail">
+            <v-list-item class="align-self-center mb-2" v-else>
                 <Link :href="route('logout')" method="post" as="button" class="v-list-item__link">
                     <v-btn
                         prepend-icon="mdi-logout"

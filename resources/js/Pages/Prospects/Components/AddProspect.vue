@@ -154,3 +154,10 @@ const submitForm = () => {
         </v-container>
     </v-form>
 </template>
+
+<style scoped>
+.v-text-field .v-input__control .v-input__slot input,
+.v-autocomplete .v-input__control .v-input__slot input {
+    background-color: red;
+}
+</style>
