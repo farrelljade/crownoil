@@ -21,8 +21,9 @@ class ProspectController extends Controller
 
     public function show(Prospect $prospect): Response
     {
+
         return Inertia::render('Prospects/Show', [
-            'prospect' => $prospect->load(['user', 'leadSource', 'address']),
+            'prospect' => $prospect->load(['user', 'leadSource', 'address', 'orders.product', 'orders.user']),
         ]);
     }
 
