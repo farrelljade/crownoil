@@ -35,11 +35,17 @@ class OrderController extends Controller
     {
         $request->validate([
             'prospect_id' => 'required|exists:prospects,id',
+            'user_id' => 'required|exists:users,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'ppl' => 'required|numeric|min:0',
+            'ppl_cost' => 'required|numeric|min:0',
+            'ppl_sell' => 'required|numeric|min:0',
+            'vat' => 'required|numeric|min:0',
+            'nett_total' => 'required|numeric|min:0',
             'total' => 'required|numeric|min:0',
-            'user_id' => 'required|exists:users,id',
+            'ppl_profit' => 'required|numeric|min:0',
+            'total_profit' => 'required|numeric|min:0',
+
         ]);
 
         Order::create($request->all());

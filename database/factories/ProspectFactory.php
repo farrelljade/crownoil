@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use App\Models\LeadSource;
+use App\Models\Prospect;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,5 +28,14 @@ class ProspectFactory extends Factory
             'email' => $this->faker->email(),
             'lead_source_id' => LeadSource::inRandomOrder()->first()->id ?? LeadSource::factory()->create()->id,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Prospect $prospect) {
+            Address::factory()->create([
+                'prospect_id' => $prospect->id,
+            ]);
+        });
     }
 }

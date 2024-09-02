@@ -12,11 +12,16 @@ class Order extends Model
 
     protected $fillable = [
         'prospect_id',
-        'product_id',
         'user_id',
+        'product_id',
         'quantity',
-        'ppl',
+        'ppl_cost',
+        'ppl_sell',
+        'vat',
+        'nett_total',
         'total',
+        'ppl_profit',
+        'total_profit',
     ];
 
     public function user(): BelongsTo
