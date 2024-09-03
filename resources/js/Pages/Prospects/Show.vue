@@ -24,7 +24,7 @@ const props = defineProps({
                 </template>
             </v-breadcrumbs>
             <v-row>
-                <v-col cols="12" md="6">
+                <v-col cols="12" md="5">
                     <v-card class="mb-2 pa-3">
                         <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                             Contact Details: {{ prospect.name }}
@@ -94,7 +94,7 @@ const props = defineProps({
                     </v-card>
                 </v-col>
 
-                <v-col cols="12" md="6">
+                <v-col cols="12" md="7">
                     <v-card class="mb-2 pa-3">
                         <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                             Recent Orders
@@ -107,6 +107,8 @@ const props = defineProps({
                                     { title: 'PPL Cost', key: 'ppl_cost'},
                                     { title: 'PPL Sell', key: 'ppl_sell' },
                                     { title: 'Total', key: 'total' },
+                                    { title: 'PPL Profit', key: 'ppl_profit' },
+                                    { title: 'Total Profit', key: 'total_profit' },
                                     { title: 'Created At', key: 'created_at' }
                                 ]"
                                 :items="prospect.orders"
@@ -121,6 +123,15 @@ const props = defineProps({
                                 </template>
                                 <template v-slot:item.ppl_sell="{ item }">
                                     £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.ppl_cost="{ item }">
+                                    £{{ item.ppl_cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.ppl_profit="{ item }">
+                                    £{{ item.ppl_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.total_profit="{ item }">
+                                    £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
                                 </template>
                                 <template v-slot:item.total="{ item }">
                                     £{{ item.total.toLocaleString() }}

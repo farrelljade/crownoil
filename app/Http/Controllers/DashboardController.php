@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LeadSource;
+use App\Models\Order;
 use App\Models\Prospect;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,24 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $data['prospects'] = Prospect::with('leadSource')
+        $data = $this->getCommonData($request);
+
+        // Get each users specific orders
+        $data['userOrders'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at')
+            ->get();
+
+        return Inertia::render('Dashboard/Index', $data);
+    }
+
+    private function getCommonData(Request $request): array
+    {
+        $data = [];
+
+        $data['prospects'] = Prospect::query()
+            ->with('leadSource')
             ->where('user_id', Auth::id())
             ->get()
             ->toArray();
@@ -24,6 +42,6 @@ class DashboardController extends Controller
             ->orderBy('name', 'desc')
             ->get();
 
-        return Inertia::render('Dashboard/Index', $data);
+        return $data;
     }
 }

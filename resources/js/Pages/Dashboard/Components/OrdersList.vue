@@ -1,0 +1,64 @@
+<script setup>
+import AddOrder from "@/Pages/Orders/Components/AddOrder.vue";
+import {computed, ref} from "vue";
+
+const dialog = ref(false);
+
+const props = defineProps({
+    userOrders: {
+        type: Array,
+        required: true
+    }
+})
+
+const latestOrdersHeaders = [
+    { title: 'Company', key: 'prospect.name', sortable: false },
+    { title: 'Product', key: 'product.name', sortable: false },
+    { title: 'LTS', key: 'quantity', sortable: false },
+    { title: 'PPL Cost', key: 'ppl_cost', sortable: false },
+    { title: 'PPL Sell', key: 'ppl_sell', sortable: false },
+    { title: 'Total', key: 'total', sortable: false },
+    { title: 'Total Profit', key: 'total_profit', sortable: true },
+    { title: 'Action', key: 'actions', sortable: false }
+];
+</script>
+
+<template>
+    <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+        <span>Orders</span>
+        <v-tooltip text="Add Order">
+            <template v-slot:activator="{ props }">
+                <v-btn
+                    density="compact"
+                    color="primary"
+                    icon="mdi-plus"
+                    :="props"
+                    @click="dialog = true"
+                >
+                </v-btn>
+            </template>
+        </v-tooltip>
+    </v-card-title>
+
+    <v-card-text>
+        <v-data-table
+            :headers="latestOrdersHeaders"
+            :items="props.userOrders"
+            items-per-page="5"
+            class="elevation-3"
+        >
+            <template v-slot:item.ppl_cost="{ item }">
+                £{{ item.ppl_cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+            </template>
+            <template v-slot:item.ppl_sell="{ item }">
+                £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+            </template>
+            <template v-slot:item.total="{ item }">
+                £{{ item.total.toLocaleString() }}
+            </template>
+            <template v-slot:item.total_profit="{ item }">
+                £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+            </template>
+        </v-data-table>
+    </v-card-text>
+</template>
