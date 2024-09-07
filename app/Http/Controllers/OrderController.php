@@ -18,7 +18,7 @@ class OrderController extends Controller
 
         $data['orders'] = Order::query()
             ->with(['product', 'prospect', 'user'])
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return Inertia::render('Orders/OrdersPage', $data);

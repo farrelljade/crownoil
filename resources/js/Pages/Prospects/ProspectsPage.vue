@@ -40,8 +40,8 @@ const tableData = computed(() => {
 });
 
 const latestProspectsHeaders = [
-    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Company Name', key: 'name', sortable: false },
+    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Lead Source', key: 'lead_source.name', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];

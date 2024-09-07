@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
 const dialog = ref(false);
@@ -30,7 +30,19 @@ const props = defineProps({
     users: {
         type: Array,
         required: true,
-    }
+    },
+    prospectName: {
+        type: Object,
+        default: null,
+    },
+    assignedUserName: {
+        type: Object,
+        default: null,
+    },
+    customerProducts: {
+        type: Array,
+        default: null,
+    },
 });
 
 const emit = defineEmits(['close']);
@@ -42,14 +54,14 @@ const pricing = {
     'Gas Oil': { threshold: 10000, low: 0.85, high: 0.80 },
 };
 
-const userName = computed(() => {
-    const user = users.value.find(u => u.id === form.user_id);
-    return user ? user.name : 'No user selected';
-});
-
 const pplCost = computed(() => {
+    const productList = props.customerProducts && props.customerProducts.length > 0
+        ? props.customerProducts
+        : props.products;
+
     if (!form.product_id || !form.quantity) return null;
-    const selectedProduct = props.products.find(
+
+    const selectedProduct = productList.find(
         (product) => product.id === form.product_id
     );
     if (!selectedProduct) return null;
@@ -89,13 +101,6 @@ const totalProfit = computed(() => {
     return (form.quantity * form.ppl_profit).toFixed(2);
 });
 
-watch(() => form.prospect_id, (newProspectId) => {
-    const selectedProspect = props.prospects.find(prospect => prospect.id === newProspectId);
-    if (selectedProspect && selectedProspect.user_id) {
-        form.user_id = selectedProspect.user_id;
-    }
-});
-
 watch(pplCost, (newPplCost) => {
     form.ppl_cost = newPplCost;
 });
@@ -118,6 +123,23 @@ watch(pplProfit, (newPplProfit) => {
 
 watch(totalProfit, (newTotalProfit) => {
     form.total_profit = newTotalProfit;
+});
+
+onMounted(() => {
+    if (props.assignedUserName) {
+        form.user_id = props.assignedUserName.id;
+    } else {
+        watch(() => form.prospect_id, (newProspectId) => {
+            const selectedProspect = props.prospects.find(prospect => prospect.id === newProspectId);
+            if (selectedProspect && selectedProspect.user_id) {
+                form.user_id = selectedProspect.user_id;
+            }
+        });
+    }
+
+    if (props.prospectName) {
+        form.prospect_id = props.prospectName.id;
+    }
 });
 
 const submitForm = () => {
@@ -157,7 +179,7 @@ const submitForm = () => {
                 <v-col cols="12" md="3">
                     <v-autocomplete
                         v-model="form.product_id"
-                        :items="products"
+                        :items="customerProducts || products"
                         item-value="id"
                         item-title="name"
                         label="Product"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LeadSource;
+use App\Models\Product;
 use App\Models\Prospect;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -21,10 +22,10 @@ class ProspectController extends Controller
 
     public function show(Prospect $prospect): Response
     {
+        $data = $this->getCommonData(new Request());
+        $data['prospect'] = $prospect->load(['user', 'leadSource', 'address', 'orders.product', 'orders.user']);
 
-        return Inertia::render('Prospects/Show', [
-            'prospect' => $prospect->load(['user', 'leadSource', 'address', 'orders.product', 'orders.user']),
-        ]);
+        return Inertia::render('Prospects/Show', $data);
     }
 
     public function create(): Response
@@ -80,6 +81,9 @@ class ProspectController extends Controller
             ->with(['user:id,name', 'leadSource:id,name'])
             ->orderBy('name')
             ->get(['id', 'name', 'user_id', 'lead_source_id']);
+        $data['products'] = Product::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
 
         return $data;
     }

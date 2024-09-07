@@ -37,8 +37,8 @@ const props = defineProps({
     <App>
         <v-container fluid>
             <v-row>
-                <v-col cols="12" md="6">
-                    <v-card class="mb-2 pa-3">
+                <v-col cols="12" md="5">
+                    <v-card>
                         <template v-slot:default>
                             <div>
                                 <ProspectList
@@ -50,8 +50,8 @@ const props = defineProps({
                         </template>
                     </v-card>
                 </v-col>
-                <v-col cols="12" md="6">
-                    <v-card class="mb-2 pa-3">
+                <v-col cols="12" md="7">
+                    <v-card>
                         <template v-slot:default>
                             <div>
                                 <OrdersList

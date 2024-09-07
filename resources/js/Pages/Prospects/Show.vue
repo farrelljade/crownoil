@@ -1,10 +1,18 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import App from '@/App.vue';
+import AddOrder from '@/Pages/Orders/Components/AddOrder.vue';
+import {ref} from "vue";
+
+const dialog = ref(false);
 
 const props = defineProps({
     prospect: {
         type: Object,
+        required: true
+    },
+    products: {
+        type: Array,
         required: true
     }
 });
@@ -25,7 +33,7 @@ const props = defineProps({
             </v-breadcrumbs>
             <v-row>
                 <v-col cols="12" md="5">
-                    <v-card class="mb-2 pa-3">
+                    <v-card>
                         <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                             Contact Details: {{ prospect.name }}
                         </v-card-title>
@@ -95,9 +103,21 @@ const props = defineProps({
                 </v-col>
 
                 <v-col cols="12" md="7">
-                    <v-card class="mb-2 pa-3">
+                    <v-card>
                         <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                             Recent Orders
+                            <v-tooltip text="New Order">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn
+                                        density="compact"
+                                        color="primary"
+                                        icon="mdi-plus"
+                                        :="props"
+                                        @click="dialog = true"
+                                    >
+                                    </v-btn>
+                                </template>
+                            </v-tooltip>
                         </v-card-title>
                         <v-card-text>
                             <v-data-table
@@ -145,5 +165,21 @@ const props = defineProps({
                 </v-col>
             </v-row>
         </v-container>
+
+        <v-dialog v-model="dialog">
+            <v-card>
+                <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                    <span class="headline">New Order</span>
+                </v-card-title>
+                <v-card-text>
+                    <AddOrder
+                        @close="dialog = false"
+                        :prospectName="prospect"
+                        :assignedUserName="prospect.user"
+                        :customerProducts="products"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </App>
 </template>

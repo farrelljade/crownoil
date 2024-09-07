@@ -1,29 +1,28 @@
 <script setup>
 import {onMounted, ref, watch} from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
-import {createCookie, readCookie} from "@/helpers.js";
+import {createCookie, readCookie, userHasPermission} from "@/helpers.js";
 
 const drawer = ref(true);
-const rail = ref(true);
+const rail = ref(false);
 
 const { props } = usePage();
 
-function updateSidebarCookie(state) {
-    createCookie('sidebar_open', state ? 'true' : 'false', 7);
-}
+const openSidebar = () => {
+    createCookie('sidebar', '', -1);
+    rail.value = !rail.value;
+};
 
-onMounted(() => {
-    const sidebarState = readCookie('sidebar_open');
-    if (sidebarState !== null) {
-        drawer.value = sidebarState === 'true';
-    } else {
-        drawer.value = true;
-    }
-});
+const closeSidebar = () => {
+    createCookie('sidebar', '', -1);
+    rail.value = true;
+};
 
-watch(drawer, (newVal) => {
-    updateSidebarCookie(newVal);
-});
+// onMounted(() => {
+//     if (readCookie('sidebar')) {
+//         rail.value = true;
+//     }
+// });
 </script>
 
 <template>
@@ -31,25 +30,24 @@ watch(drawer, (newVal) => {
         v-model="drawer"
         width="200"
         :rail="rail"
-        permanent
-        @click="rail = false"
-        app
     >
-        <v-flex class="d-flex flex-column justify-space-between" style="height: 100%;">
+        <v-card class="d-flex flex-column justify-space-between" style="height: 100%;">
             <div>
                 <v-list-item class="align-self-center mb-2" v-if="rail">
                     <v-icon color="grey">mdi-account</v-icon>
                 </v-list-item>
 
-                <v-list-item class="align-self-center ml-2" v-else
+                <v-list-item
+                    class="align-self-center ml-2"
+                    v-else
                     :title="`Hello, ${props.auth.user.name}`"
+                    @click="openSidebar"
                     nav
                 >
                     <template v-slot:append>
                         <v-btn
                             icon="mdi-chevron-left"
                             variant="text"
-                            @click.stop="rail = !rail"
                         ></v-btn>
                     </template>
                 </v-list-item>
@@ -60,8 +58,8 @@ watch(drawer, (newVal) => {
                     <v-list-item
                         :href="route('dashboard')"
                         prepend-icon="mdi-home-city"
-                        title="Home"
-                        value="home"
+                        title="Dashboard"
+                        value="dashboard"
                     ></v-list-item>
 
                     <v-list-item
@@ -94,6 +92,6 @@ watch(drawer, (newVal) => {
                     </v-btn>
                 </Link>
             </v-list-item>
-        </v-flex>
+        </v-card>
     </v-navigation-drawer>
 </template>

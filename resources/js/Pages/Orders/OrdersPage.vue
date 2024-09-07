@@ -62,7 +62,7 @@ const latestOrdersHeaders = [
         <v-container fluid>
             <v-card class="mb-2 pa-3">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-                    <span>Orders</span>
+                    Orders
                     <v-tooltip text="New Order">
                         <template v-slot:activator="{ props }">
                             <v-btn

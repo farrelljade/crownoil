@@ -26,3 +26,13 @@ export function eraseCookie(name) {
 export function getUser(allUsers, id) {
     return allUsers.filter(user => user.id === id);
 }
+
+export function userHasPermission(user, permissionName) {
+    if (permissionName === null || permissionName === "") {
+        return true;
+    }
+    if (user.is_system_admin) {
+        return 1;
+    }
+    return user.permissions.includes(permissionName) ? 1 : 0;
+}
