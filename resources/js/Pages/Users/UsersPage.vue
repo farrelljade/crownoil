@@ -23,7 +23,7 @@ const tableData = computed(() => {
 
 const usersHeaders = [
     { title: 'User Name', key: 'name', sortable: false },
-    { title: 'Manager', key: 'manager', sortable: false },
+    { title: 'Manager', key: 'manager.name', sortable: false },
     { title: 'Email', key: 'email', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];

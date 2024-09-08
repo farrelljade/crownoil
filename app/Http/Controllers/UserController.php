@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -12,6 +13,7 @@ class UserController extends Controller
     {
         $data = [
             'users' => User::query()
+                ->with('manager')
                 ->orderBy('name')
                 ->get(),
         ];
@@ -25,9 +27,24 @@ class UserController extends Controller
 
         $data = [
             'user' => $user,
+            'managers' => User::query()
+                ->where('id', '!=', $user->id)
+                ->orderBy('name', 'asc')
+                ->get(),
         ];
 
         return Inertia::render('Users/UserPage', $data);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validatedData = $request->validate([
+            'manager_id' => 'nullable|exists:users,id',
+        ]);
+
+        $user->update($validatedData);
+
+        return redirect()->route('users.show', $user);
     }
 
 }

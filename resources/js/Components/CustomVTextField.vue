@@ -3,8 +3,6 @@
         :="$attrs"
         @="$listeners"
         variant="solo"
-        class="custom-text-field"
-
     />
 </template>
 
