@@ -1,6 +1,8 @@
 <script setup>
 import {computed, onMounted, ref, watch} from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
+import CustomVTextField from "@/Components/CustomVTextField.vue";
 
 const dialog = ref(false);
 
@@ -157,7 +159,7 @@ const submitForm = () => {
         <v-container fluid>
             <v-row>
                 <v-col cols="12" md="3">
-                    <v-autocomplete
+                    <CustomVAutocomplete
                         v-model="form.prospect_id"
                         :items="prospects"
                         item-value="id"
@@ -167,7 +169,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-autocomplete
+                    <CustomVAutocomplete
                         v-model="form.user_id"
                         :items="users"
                         item-value="id"
@@ -177,7 +179,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-autocomplete
+                    <CustomVAutocomplete
                         v-model="form.product_id"
                         :items="customerProducts || products"
                         item-value="id"
@@ -187,14 +189,14 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.quantity"
                         label="Quantity"
                         required
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.ppl_cost"
                         :value="pplCost"
                         label="PPL Cost"
@@ -202,14 +204,14 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.ppl_sell"
                         label="PPL Sell"
                         required
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.vat"
                         :value="vat"
                         label="VAT"
@@ -217,7 +219,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.nett_total"
                         :value="nettTotal"
                         label="Nett Total"
@@ -225,7 +227,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.total"
                         :value="totalCost"
                         label="Total"
@@ -233,7 +235,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.ppl_profit"
                         :value="pplProfit"
                         label="PPL Profit"
@@ -241,7 +243,7 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <v-text-field
+                    <CustomVTextField
                         v-model="form.total_profit"
                         :value="totalProfit"
                         label="Total Profit"

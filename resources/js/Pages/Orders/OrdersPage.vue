@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import App from '@/App.vue';
 import AddOrder from '@/Pages/Orders/Components/AddOrder.vue';
+import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
 
 const dialog = ref(false);
 
@@ -80,7 +81,7 @@ const latestOrdersHeaders = [
                 <v-card-text>
                     <v-row>
                         <v-col cols="12" md="3">
-                            <v-autocomplete
+                            <CustomVAutocomplete
                                 v-model="params.product_id"
                                 :items="products"
                                 item-value="id"
@@ -90,7 +91,7 @@ const latestOrdersHeaders = [
                             />
                         </v-col>
                         <v-col cols="12" md="3">
-                            <v-autocomplete
+                            <CustomVAutocomplete
                                 v-model="params.prospect_id"
                                 :items="prospects"
                                 item-value="id"

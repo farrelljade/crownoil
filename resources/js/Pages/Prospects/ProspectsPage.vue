@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import App from '@/App.vue';
 import AddProspect from '@/Pages/Prospects/Components/AddProspect.vue';
+import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
 
 const dialog = ref(false);
 
@@ -72,7 +73,7 @@ const latestProspectsHeaders = [
                 <v-card-text>
                     <v-row>
                         <v-col cols="6" md="3">
-                            <v-autocomplete
+                            <CustomVAutocomplete
                                 class="mt-2"
                                 v-model="params.user_id"
                                 label="Assigned User"
@@ -84,7 +85,7 @@ const latestProspectsHeaders = [
                             />
                         </v-col>
                         <v-col cols="6" md="3">
-                            <v-autocomplete
+                            <CustomVAutocomplete
                                 class="mt-2"
                                 v-model="params.prospect_name"
                                 label="Company Name"
@@ -96,7 +97,7 @@ const latestProspectsHeaders = [
                             />
                         </v-col>
                         <v-col cols="6" md="3">
-                            <v-autocomplete
+                            <CustomVAutocomplete
                                 class="mt-2"
                                 v-model="params.lead_source_id"
                                 label="Lead Source"
