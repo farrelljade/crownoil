@@ -75,6 +75,26 @@ const closeSidebar = () => {
                         title="Orders"
                         value="orders"
                     ></v-list-item>
+
+                    <v-list-group
+                        value="Admin"
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-list-item
+                                prepend-icon="mdi-account-circle"
+                                v-bind="props"
+                                title="Admin"
+                            ></v-list-item>
+                        </template>
+
+                        <v-list-item
+                            :href="route('users.index')"
+                            title="Users"
+                            value="users"
+                        ></v-list-item>
+                    </v-list-group>
+
+
                 </v-list>
             </div>
 
