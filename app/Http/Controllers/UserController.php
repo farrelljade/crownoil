@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
@@ -17,6 +17,17 @@ class UserController extends Controller
         ];
 
         return Inertia::render('Users/UsersPage', $data);
+    }
+
+    public function show(User $user): Response
+    {
+        $user = User::with('manager')->find($user->id);
+
+        $data = [
+            'user' => $user,
+        ];
+
+        return Inertia::render('Users/UserPage', $data);
     }
 
 }
