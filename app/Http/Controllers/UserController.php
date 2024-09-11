@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,7 +19,7 @@ class UserController extends Controller
                 ->get(),
         ];
 
-        return Inertia::render('Users/UsersPage', $data);
+        return Inertia::render('Admin/UsersPage', $data);
     }
 
     public function show(User $user): Response
@@ -33,18 +34,14 @@ class UserController extends Controller
                 ->get(),
         ];
 
-        return Inertia::render('Users/UserPage', $data);
+        return Inertia::render('Admin/Users/Components/EditUser', $data);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'manager_id' => 'nullable|exists:users,id',
-        ]);
+        $user->update($request->validated());
 
-        $user->update($validatedData);
-
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.index');
     }
 
 }

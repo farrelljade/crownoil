@@ -27,12 +27,20 @@ export function getUser(allUsers, id) {
     return allUsers.filter(user => user.id === id);
 }
 
+export function getAssignedPermissionArray(user) {
+    let userPermissions = [];
+    for (let i = 0; i < user.permissions.length; i++) {
+        userPermissions.push(user.permissions[i].permission.permission);
+    }
+    return userPermissions;
+}
+
 export function userHasPermission(user, permissionName) {
     if (permissionName === null || permissionName === "") {
         return true;
     }
     if (user.is_system_admin) {
-        return 1;
+        return true;
     }
-    return user.permissions.includes(permissionName) ? 1 : 0;
+    return getAssignedPermissionArray(user).includes(permissionName) ? 1 : 0;
 }
