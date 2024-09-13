@@ -25,7 +25,7 @@ class ProspectController extends Controller
         $data = $this->getCommonData(new Request());
         $data['prospect'] = $prospect->load(['user', 'leadSource', 'address', 'orders.product', 'orders.user']);
 
-        return Inertia::render('Prospects/Show', $data);
+        return Inertia::render('Prospects/ProspectPage', $data);
     }
 
     public function create(): Response

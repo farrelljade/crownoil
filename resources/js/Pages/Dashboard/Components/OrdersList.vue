@@ -1,4 +1,6 @@
 <script setup>
+import { defineProps } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import AddOrder from "@/Pages/Orders/Components/AddOrder.vue";
 import {computed, ref} from "vue";
 
@@ -58,6 +60,18 @@ const latestOrdersHeaders = [
             </template>
             <template v-slot:item.total_profit="{ item }">
                 £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+            </template>
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip text="Edit Order">
+                    <template v-slot:activator="{ props }">
+                        <Link :href="route('prospects.show', item.id)">
+                            <v-icon color="orange" :="props">
+                                mdi-pencil
+                            </v-icon>
+                        </Link>
+
+                    </template>
+                </v-tooltip>
             </template>
         </v-data-table>
     </v-card-text>

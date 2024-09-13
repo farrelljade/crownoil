@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { defineAsyncComponent } from 'vue';
 import App from '@/App.vue';
+import SheetInformation from "@/Pages/Dashboard/Components/SheetInformation.vue";
 
 const ProspectList = defineAsyncComponent(
     () => import('@/Pages/Dashboard/Components/ProspectList.vue')
@@ -32,10 +33,23 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="Prospects" />
+    <Head title="User Page" />
 
     <App>
         <v-container fluid>
+            <v-row>
+                <v-col cols="12">
+                    <v-card>
+                        <template v-slot:default>
+                            <div>
+                                <SheetInformation
+
+                                />
+                            </div>
+                        </template>
+                    </v-card>
+                </v-col>
+            </v-row>
             <v-row>
                 <v-col cols="12" md="5">
                     <v-card>

@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        return Inertia::render('Dashboard/Index', $data);
+        return Inertia::render('Dashboard/UserPage', $data);
     }
 
     private function getCommonData(Request $request): array

@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import App from '@/App.vue';
 import CustomVTextField from "@/Components/CustomVTextField.vue";
 import {computed, ref} from "vue";
+import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
 
 const props = defineProps({
     users: {
@@ -16,8 +17,8 @@ const params = ref({
 });
 
 const tableData = computed(() => {
-    return props.users.filter(item => {
-        return (!params.value.user_id || item.id === params.value.user_id);
+    return props.users.filter(user => {
+        return (!params.value.user_id || user.id === params.value.user_id);
     });
 });
 
@@ -56,9 +57,9 @@ console.log(props.users);
                 <v-card-text>
                     <v-row>
                         <v-col cols="12" md="3">
-                            <CustomVTextField
+                            <CustomVAutocomplete
                                 class="mt-2"
-
+                                v-model="params.user_id"
                                 label="User Name"
                                 :items="users"
                                 item-value="id"
@@ -84,6 +85,15 @@ console.log(props.users);
                                     <Link :href="route('users.show', item.id)">
                                         <v-icon color="green" v-bind="props">
                                             mdi-location-enter
+                                        </v-icon>
+                                    </Link>
+                                </template>
+                            </v-tooltip>
+                            <v-tooltip text="Edit Profile">
+                                <template v-slot:activator="{ props }">
+                                    <Link :href="route('users.show', item.id)">
+                                        <v-icon color="orange" v-bind="props" class="ml-2">
+                                            mdi-pencil
                                         </v-icon>
                                     </Link>
                                 </template>

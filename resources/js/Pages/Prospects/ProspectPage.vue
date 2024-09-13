@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import App from '@/App.vue';
 import AddOrder from '@/Pages/Orders/Components/AddOrder.vue';
 import {ref} from "vue";
+import CustomVTextField from "@/Components/CustomVTextField.vue";
 
 const dialog = ref(false);
 
@@ -40,7 +41,7 @@ const props = defineProps({
                         <v-card-text>
                             <v-row class="elevation-3">
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-home-floor-1"
                                         label="Line 1"
                                         v-model="prospect.address.line_1"
@@ -48,7 +49,7 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-home-floor-2"
                                         label="Line 2"
                                         v-model="prospect.address.line_2"
@@ -57,7 +58,7 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-city"
                                         label="City"
                                         v-model="prospect.address.city"
@@ -65,7 +66,7 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-image-area"
                                         label="County"
                                         v-model="prospect.address.county"
@@ -74,7 +75,7 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-post"
                                         label="Postcode"
                                         v-model="prospect.address.postcode"
@@ -82,7 +83,7 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-phone"
                                         label="Tel"
                                         v-model="prospect.number"
@@ -90,10 +91,18 @@ const props = defineProps({
                                     />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field
+                                    <CustomVTextField
                                         prepend-icon="mdi-email"
                                         label="Email"
                                         v-model="prospect.email"
+                                        readonly
+                                    />
+                                </v-col>
+                                <v-col cols="12" md="6">
+                                    <CustomVTextField
+                                        prepend-icon="mdi-account"
+                                        label="Account Manager"
+                                        v-model="prospect.user.name"
                                         readonly
                                     />
                                 </v-col>
