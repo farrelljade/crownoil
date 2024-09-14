@@ -33,6 +33,22 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    userTotalProfitThisMonth: {
+        type: Number,
+        required: true,
+    },
+    userOrdersThisMonth: {
+        type: Array,
+        required: true,
+    },
+    userOrdersLastMonth: {
+        type: Array,
+        required: true,
+    },
+    userOrdersMonthBeforeLast: {
+        type: Array,
+        required: true,
+    },
 });
 </script>
 
@@ -47,7 +63,10 @@ const props = defineProps({
                         <template v-slot:default>
                             <div>
                                 <SheetInformation
-                                    :userTotalProfit="userTotalProfit"
+                                    :userTotalProfitThisMonth="userTotalProfitThisMonth"
+                                    :userOrdersThisMonth="userOrdersThisMonth"
+                                    :userOrdersLastMonth="userOrdersLastMonth"
+                                    :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"
                                 />
                             </div>
                         </template>

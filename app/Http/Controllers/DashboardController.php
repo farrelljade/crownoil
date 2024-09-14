@@ -24,6 +24,28 @@ class DashboardController extends Controller
         $data['userTotalProfit'] = Order::query()
             ->where('user_id', Auth::id())
             ->sum('total_profit');
+        $data['userTotalProfitThisMonth'] = Order::query()
+            ->where('user_id', Auth::id())
+            ->whereMonth('created_at', now()->month)
+            ->sum('total_profit');
+        $data['userOrdersThisMonth'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->where('user_id', Auth::id())
+            ->whereMonth('created_at', now()->month)
+            ->orderBy('created_at')
+            ->get();
+        $data['userOrdersLastMonth'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->where('user_id', Auth::id())
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->orderBy('created_at')
+            ->get();
+        $data['userOrdersMonthBeforeLast'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->where('user_id', Auth::id())
+            ->whereMonth('created_at', now()->subMonths(2)->month)
+            ->orderBy('created_at')
+            ->get();
 
         return Inertia::render('Dashboard/UserPage', $data);
     }

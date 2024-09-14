@@ -1,19 +1,52 @@
 <script setup>
+import {ref} from "vue";
+import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
-    userTotalProfit: {
+    userTotalProfitThisMonth: {
         type: Number,
+        required: true,
+    },
+    userOrdersThisMonth: {
+        type: Array,
+        required: true,
+    },
+    userOrdersLastMonth: {
+        type: Array,
+        required: true,
+    },
+    userOrdersMonthBeforeLast: {
+        type: Array,
         required: true,
     },
 });
 
+const showNoContactDialog = ref(false);
+const tab = ref(0);
+
 const currentMonth = new Date().toLocaleString('en-GB', { month: 'long' });
+const lastMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toLocaleString('en-GB', { month: 'long' });
+const monthBeforeLast = new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1).toLocaleString('en-GB', { month: 'long' });
 const daysInTheMonthRemaining = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() - new Date().getDate();
+
+const openNoContactDialog = () => {
+    showNoContactDialog.value = true;
+};
+
+const ordersHeaders = [
+    { title: 'Company', key: 'prospect.name', sortable: true },
+    { title: 'Product', key: 'product.name', sortable: true },
+    { title: 'LTS', key: 'quantity', sortable: true },
+    { title: 'PPL', key: 'ppl_sell', sortable: true },
+    { title: 'Total', key: 'total', sortable: true },
+    { title: 'Date', key: 'created_at', sortable: true },
+    { title: 'Action', key: 'actions', sortable: false }
+];
 </script>
 
 <template>
     <v-row>
-        <v-col class="cursor-pointer" cols="12" md="3">
+        <v-col class="cursor-pointer" cols="12" md="3" @click="openNoContactDialog">
             <v-sheet
                 class="dashboardInfo"
                 :height="100"
@@ -37,7 +70,7 @@ const daysInTheMonthRemaining = new Date(new Date().getFullYear(), new Date().ge
                 </v-col>
 
                 <v-col class="actualProfit centered-text">
-                    £{{ userTotalProfit.toLocaleString() }}
+                    £{{ userTotalProfitThisMonth.toLocaleString() }}
                 </v-col>
 
                 <v-col class="profitValueSmallLeft bottom-left">
@@ -61,4 +94,113 @@ const daysInTheMonthRemaining = new Date(new Date().getFullYear(), new Date().ge
             </v-sheet>
         </v-col>
     </v-row>
+
+    <v-dialog
+        v-model="showNoContactDialog"
+        width="auto"
+    >
+        <v-card>
+            <v-tabs
+                v-model="tab"
+                bg-color="primary"
+                >
+                <v-tab value="thisMonthsProfit">{{ currentMonth }}</v-tab>
+                <v-tab value="lastMonthsProfit">{{ lastMonth }}</v-tab>
+                <v-tab value="monthBeforeLastProfit">{{ monthBeforeLast }}</v-tab>
+            </v-tabs>
+            <v-card-text style="overflow: auto; max-height: 80vh;">
+                <v-tabs-window v-model="tab">
+                    <v-tabs-window-item value="thisMonthsProfit">
+                        <v-row dense>
+                            <v-data-table
+                                :headers="ordersHeaders"
+                                :items="userOrdersThisMonth"
+                            >
+                                <template v-slot:item.ppl_sell="{ item }">
+                                    £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.total="{ item }">
+                                    £{{ item.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                                </template>
+                                <template v-slot:item.created_at="{ item }">
+                                    {{ new Date(item.created_at).toLocaleString('en-GB') }}
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip text="Go To Order" left>
+                                        <template v-slot:activator="{ props }">
+                                            <Link :href="route('orders.show', item.id)">
+                                                <v-icon color="green" v-bind="props">
+                                                    mdi-location-enter
+                                                </v-icon>
+                                            </Link>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-row>
+                    </v-tabs-window-item>
+
+                    <v-tabs-window-item value="lastMonthsProfit">
+                        <v-row dense>
+                            <v-data-table
+                                :headers="ordersHeaders"
+                                :items="userOrdersLastMonth"
+                            >
+                                <template v-slot:item.ppl_sell="{ item }">
+                                    £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.total="{ item }">
+                                    £{{ item.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                                </template>
+                                <template v-slot:item.created_at="{ item }">
+                                    {{ new Date(item.created_at).toLocaleString('en-GB') }}
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip text="Go To Order" left>
+                                        <template v-slot:activator="{ props }">
+                                            <Link :href="route('orders.show', item.id)">
+                                                <v-icon color="green" v-bind="props">
+                                                    mdi-location-enter
+                                                </v-icon>
+                                            </Link>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-row>
+                    </v-tabs-window-item>
+
+                    <v-tabs-window-item value="monthBeforeLastProfit">
+                        <v-row dense>
+                            <v-data-table
+                                :headers="ordersHeaders"
+                                :items="userOrdersMonthBeforeLast"
+                            >
+                                <template v-slot:item.ppl_sell="{ item }">
+                                    £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                                </template>
+                                <template v-slot:item.total="{ item }">
+                                    £{{ item.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                                </template>
+                                <template v-slot:item.created_at="{ item }">
+                                    {{ new Date(item.created_at).toLocaleString('en-GB') }}
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip text="Go To Order" left>
+                                        <template v-slot:activator="{ props }">
+                                            <Link :href="route('orders.show', item.id)">
+                                                <v-icon color="green" v-bind="props">
+                                                    mdi-location-enter
+                                                </v-icon>
+                                            </Link>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-row>
+                    </v-tabs-window-item>
+                </v-tabs-window>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
