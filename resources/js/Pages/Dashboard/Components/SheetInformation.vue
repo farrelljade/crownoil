@@ -1,4 +1,14 @@
 <script setup>
+
+const props = defineProps({
+    userTotalProfit: {
+        type: Number,
+        required: true,
+    },
+});
+
+const currentMonth = new Date().toLocaleString('en-GB', { month: 'long' });
+const daysInTheMonthRemaining = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() - new Date().getDate();
 </script>
 
 <template>
@@ -6,15 +16,18 @@
         <v-col class="cursor-pointer" cols="12" md="3">
             <v-sheet
                 class="dashboardInfo"
-                :elevation="12"
                 :height="100"
                 border
                 color="deep-purple-lighten-1"
                 rounded
             >
-                <!-- Tooltip in the top right -->
+
+                <v-col class="name top-left">
+                    Profit for {{ currentMonth }}
+                </v-col>
+
                 <v-col class="information top-right">
-                    <v-tooltip text="Total profit" location="bottom">
+                    <v-tooltip text="Total profit this month" location="left">
                         <template v-slot:activator="{ props }">
                             <v-icon color="white" v-bind="props">
                                 mdi-information-outline
@@ -23,17 +36,15 @@
                     </v-tooltip>
                 </v-col>
 
-                <!-- "Profit" in the middle -->
-                <v-col class="name centered-text">
-                    Profit
+                <v-col class="actualProfit centered-text">
+                    £{{ userTotalProfit.toLocaleString() }}
                 </v-col>
 
-                <!-- Profit values in the bottom left and right -->
                 <v-col class="profitValueSmallLeft bottom-left">
-                    £3000
+                    Target - £3000
                 </v-col>
                 <v-col class="profitValueSmallRight bottom-right">
-                    £5000
+                    Days remaining: {{ daysInTheMonthRemaining }}
                 </v-col>
             </v-sheet>
         </v-col>

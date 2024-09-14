@@ -16,12 +16,14 @@ class DashboardController extends Controller
     {
         $data = $this->getCommonData($request);
 
-        // Get each users specific orders
         $data['userOrders'] = Order::query()
             ->with(['product', 'prospect', 'user'])
             ->where('user_id', Auth::id())
             ->orderBy('created_at')
             ->get();
+        $data['userTotalProfit'] = Order::query()
+            ->where('user_id', Auth::id())
+            ->sum('total_profit');
 
         return Inertia::render('Dashboard/UserPage', $data);
     }

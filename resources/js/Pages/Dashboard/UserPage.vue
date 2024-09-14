@@ -29,6 +29,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    userTotalProfit: {
+        type: Number,
+        required: true,
+    },
 });
 </script>
 
@@ -43,7 +47,7 @@ const props = defineProps({
                         <template v-slot:default>
                             <div>
                                 <SheetInformation
-
+                                    :userTotalProfit="userTotalProfit"
                                 />
                             </div>
                         </template>

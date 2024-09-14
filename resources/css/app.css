@@ -6,10 +6,18 @@
     position: relative;
 }
 
+.top-left {
+    position: absolute;
+    top: -6px;
+    left: 5px;
+    font-size: 14px;
+}
+
 .top-right {
     position: absolute;
     top: -6px;
     right: -350px;
+    font-size: 14px;
 }
 
 .centered-text {
@@ -18,23 +26,18 @@
     align-items: center;
     height: 100%;
     font-size: 18px;
-    color: white;
 }
 
 .bottom-left {
     position: absolute;
     bottom: -10px;
     left: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
+    font-size: 14px;
 }
 
 .bottom-right {
     position: absolute;
     bottom: -10px;
-    right: -320px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
+    right: -250px;
+    font-size: 14px;
 }
