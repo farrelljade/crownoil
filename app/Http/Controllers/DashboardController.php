@@ -46,6 +46,15 @@ class DashboardController extends Controller
             ->whereMonth('created_at', now()->subMonths(2)->month)
             ->orderBy('created_at')
             ->get();
+        $data['customersThisMonthByProfit'] = Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->selectRaw('prospect_id, sum(total_profit) as total_profit')
+            ->selectRaw('prospect_id, count(prospect_id) as total_orders')
+            ->where('user_id', Auth::id())
+            ->whereMonth('created_at', now()->month)
+            ->groupBy('prospect_id')
+            ->orderBy('total_profit', 'desc')
+            ->get();
 
         return Inertia::render('Dashboard/UserPage', $data);
     }
