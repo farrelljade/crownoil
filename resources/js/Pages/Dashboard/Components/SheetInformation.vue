@@ -27,6 +27,14 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    userTotalOrdersLastMonth: {
+        type: Number,
+        required: true,
+    },
+    userTotalOrdersMonthBeforeLast: {
+        type: Number,
+        required: true,
+    },
 });
 
 const showDialogs = ref({
@@ -133,8 +141,10 @@ const customersByProfitHeaders = [
                     {{ customersThisMonthByProfit[0].prospect.name }}
                 </div>
 
-                <div class="bottom-right">
-                    Days remaining: {{ daysInTheMonthRemaining }}
+                <div class="bottom-row">
+                    <div class="bottom-left">
+                        Days remaining: {{ daysInTheMonthRemaining }}
+                    </div>
                 </div>
             </v-sheet>
         </v-col>
@@ -164,6 +174,15 @@ const customersByProfitHeaders = [
 
                 <div class="center-row">
                     {{ userTotalOrdersThisMonth }}
+                </div>
+
+                <div class="bottom-row">
+                    <div class="bottom-left">
+                        {{ lastMonth }} - {{ userTotalOrdersLastMonth || 0 }}
+                    </div>
+                    <div class="bottom-right">
+                        {{ monthBeforeLast }} - {{ userTotalOrdersMonthBeforeLast || 0 }}
+                    </div>
                 </div>
             </v-sheet>
         </v-col>

@@ -64,6 +64,14 @@ class DashboardController extends Controller
             ->where('user_id', $userId)
             ->whereMonth('created_at', now()->month)
             ->count();
+        $data['userTotalOrdersLastMonth'] = Order::query()
+            ->where('user_id', $userId)
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->count();
+        $data['userTotalOrdersMonthBeforeLast'] = Order::query()
+            ->where('user_id', $userId)
+            ->whereMonth('created_at', now()->subMonths(2)->month)
+            ->count();
         $data['customersThisMonthByProfit'] = Order::query()
             ->with(['product', 'prospect', 'user'])
             ->selectRaw('prospect_id, sum(total_profit) as total_profit')
