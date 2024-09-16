@@ -164,7 +164,7 @@ const submitForm = () => {
                         :items="prospects"
                         item-value="id"
                         item-title="name"
-                        label="Prospect"
+                        label="Company"
                         required
                     />
                 </v-col>

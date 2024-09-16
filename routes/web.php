@@ -16,9 +16,12 @@ Route::get('/', function () {
         return redirect()->route('login');
     }
 });
-Route::get('/dashboard', [DashboardController::class, 'index']) // Use the DashboardController
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+Route::get('/dashboard/user/{id}', [DashboardController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.user');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

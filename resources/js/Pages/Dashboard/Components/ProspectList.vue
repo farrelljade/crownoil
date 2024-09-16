@@ -47,7 +47,7 @@ const latestProspectsHeaders = [
     <Head title="Prospects" />
 
     <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-        <span>{{ user.name }}'s Prospect List</span>
+        <span>Prospect List</span>
         <v-tooltip text="Add Prospect">
             <template v-slot:activator="{ props }">
                 <v-btn

@@ -82,7 +82,7 @@ console.log(props.users);
                         <template v-slot:item.actions="{ item }">
                             <v-tooltip text="Go To Profile" bottom>
                                 <template v-slot:activator="{ props }">
-                                    <Link :href="route('users.show', item.id)">
+                                    <Link :href="route('dashboard.user', item.id)">
                                         <v-icon color="green" v-bind="props">
                                             mdi-location-enter
                                         </v-icon>

@@ -23,24 +23,28 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    userTotalOrdersThisMonth: {
+        type: Number,
+        required: true,
+    },
 });
 
-const showMonthProfitDialog = ref(false);
-const showCustomerProfitDialog = ref(false);
+const showDialogs = ref({
+    monthProfit: false,
+    customerProfit: false,
+    userTotalOrders: false,
+});
+
+const openDialog = (dialogName) => {
+    showDialogs.value[dialogName] = true;
+};
+
 const tab = ref(0);
 
 const currentMonth = new Date().toLocaleString('en-GB', { month: 'long' });
 const lastMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toLocaleString('en-GB', { month: 'long' });
 const monthBeforeLast = new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1).toLocaleString('en-GB', { month: 'long' });
 const daysInTheMonthRemaining = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() - new Date().getDate();
-
-const openMonthProfitDialog = () => {
-    showMonthProfitDialog.value = true;
-};
-
-const openCustomerProfitDialog = () => {
-    showCustomerProfitDialog.value = true;
-};
 
 const monthProfitHeaders = [
     { title: 'Company', key: 'prospect.name', sortable: true },
@@ -63,73 +67,110 @@ const customersByProfitHeaders = [
 
 <template>
     <v-row>
-        <v-col class="cursor-pointer" cols="12" md="3" @click="openMonthProfitDialog">
+        <v-col class="cursor-pointer" cols="12" md="3" @click="openDialog('monthProfit')">
             <v-sheet
                 class="dashboardInfo"
-                :height="100"
                 border
                 color="deep-purple-lighten-1"
                 rounded
             >
-                <v-col class="name top-left">
-                    Profit for {{ currentMonth }}
-                </v-col>
+                <div class="top-row">
+                    <div class="name">
+                        Profit for {{ currentMonth }}
+                    </div>
 
-                <v-col class="information top-right">
-                    <v-tooltip text="Total profit this month" location="left">
-                        <template v-slot:activator="{ props }">
-                            <v-icon color="white" v-bind="props">
-                                mdi-information-outline
-                            </v-icon>
-                        </template>
-                    </v-tooltip>
-                </v-col>
+                    <div class="information">
+                        <v-tooltip text="Total profit this month" location="left">
+                            <template v-slot:activator="{ props }">
+                                <v-icon color="white" v-bind="props">
+                                    mdi-information-outline
+                                </v-icon>
+                            </template>
+                        </v-tooltip>
+                    </div>
+                </div>
 
-                <v-col class="actualProfit centered-text">
+                <div class="center-row">
                     £{{ userTotalProfitThisMonth.toLocaleString() }}
-                </v-col>
+                </div>
 
-                <v-col class="profitValueSmallLeft bottom-left">
-                    Target - £3000
-                </v-col>
-                <v-col class="profitValueSmallRight bottom-right">
-                    Days remaining: {{ daysInTheMonthRemaining }}
-                </v-col>
+                <div class="bottom-row">
+                    <div class="bottom-left">
+                        Target - £3000
+                    </div>
+                    <div class="bottom-right">
+                        500% of target
+                    </div>
+                </div>
             </v-sheet>
         </v-col>
 
-        <v-col class="cursor-pointer" cols="12" md="3" @click="openCustomerProfitDialog">
+        <v-col class="cursor-pointer" cols="12" md="3" @click="openDialog('customerProfit')">
             <v-sheet
                 class="dashboardInfo"
                 :elevation="12"
-                :height="100"
                 border
                 color="deep-orange-lighten-1"
                 rounded
             >
-                <v-col class="name top-left">
-                    Most Profit - {{ currentMonth }}
-                </v-col>
+                <div class="top-row">
+                    <div class="name">
+                        Most Profit - {{ currentMonth }}
+                    </div>
 
-                <v-col class="information top-right">
-                    <v-tooltip text="Customer with the highest profit this month" location="left">
-                        <template v-slot:activator="{ props }">
-                            <v-icon color="white" v-bind="props">
-                                mdi-information-outline
-                            </v-icon>
-                        </template>
-                    </v-tooltip>
-                </v-col>
+                    <div class="information">
+                        <v-tooltip text="Customer with the highest profit this month" location="left">
+                            <template v-slot:activator="{ props }">
+                                <v-icon color="white" v-bind="props">
+                                    mdi-information-outline
+                                </v-icon>
+                            </template>
+                        </v-tooltip>
+                    </div>
+                </div>
 
-                <v-col class="actualProfit centered-text">
+                <div class="center-row">
                     {{ customersThisMonthByProfit[0].prospect.name }}
-                </v-col>
+                </div>
+
+                <div class="bottom-right">
+                    Days remaining: {{ daysInTheMonthRemaining }}
+                </div>
+            </v-sheet>
+        </v-col>
+
+        <v-col cols="12" md="3" @click="openDialog('userTotalOrders')">
+            <v-sheet
+                class="dashboardInfo"
+                :elevation="12"
+                color="blue"
+                rounded
+            >
+                <div class="top-row">
+                    <div class="name">
+                        Total Orders - {{ currentMonth }}
+                    </div>
+
+                    <div class="information">
+                        <v-tooltip text="Total orders this month" location="left">
+                            <template v-slot:activator="{ props }">
+                                <v-icon color="white" v-bind="props">
+                                    mdi-information-outline
+                                </v-icon>
+                            </template>
+                        </v-tooltip>
+                    </div>
+                </div>
+
+                <div class="center-row">
+                    {{ userTotalOrdersThisMonth }}
+                </div>
             </v-sheet>
         </v-col>
     </v-row>
 
     <v-dialog
-        v-model="showMonthProfitDialog"
+        v-model="showDialogs.monthProfit"
         width="auto"
     >
         <v-card>
@@ -238,7 +279,7 @@ const customersByProfitHeaders = [
     </v-dialog>
 
     <v-dialog
-        v-model="showCustomerProfitDialog"
+        v-model="showDialogs.customerProfit"
         width="auto"
     >
         <v-card>

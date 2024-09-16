@@ -53,6 +53,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    userTotalOrdersThisMonth: {
+        type: Number,
+        required: true,
+    },
 });
 </script>
 
@@ -72,6 +76,7 @@ const props = defineProps({
                                     :userOrdersLastMonth="userOrdersLastMonth"
                                     :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"
                                     :customersThisMonthByProfit="customersThisMonthByProfit"
+                                    :userTotalOrdersThisMonth="userTotalOrdersThisMonth"
                                 />
                             </div>
                         </template>

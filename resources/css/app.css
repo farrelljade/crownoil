@@ -3,41 +3,39 @@
 @tailwind utilities;
 
 .dashboardInfo {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
 }
 
-.top-left {
-    position: absolute;
-    top: -6px;
-    left: 5px;
-    font-size: 14px;
+.top-row,
+.bottom-row {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.top-right {
-    position: absolute;
-    top: -6px;
-    right: -350px;
-    font-size: 14px;
-}
-
-.centered-text {
+.center-row {
+    flex: 1 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
     font-size: 18px;
+    font-weight: bold;
 }
 
-.bottom-left {
-    position: absolute;
-    bottom: -10px;
-    left: 5px;
-    font-size: 14px;
-}
-
+.name,
+.information,
+.bottom-left,
 .bottom-right {
-    position: absolute;
-    bottom: -10px;
-    right: -250px;
     font-size: 14px;
+    padding: 2px;
 }
+
+.information {
+    display: flex;
+    justify-content: flex-end;
+}
+
