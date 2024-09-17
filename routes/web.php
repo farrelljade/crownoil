@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserTargetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('prospects', ProspectController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('users', UserController::class);
+    Route::resource('user-targets', UserTargetController::class);
 });
 
 require __DIR__.'/auth.php';

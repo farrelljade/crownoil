@@ -29,7 +29,6 @@ const usersHeaders = [
     { title: 'Action', key: 'actions', sortable: false }
 ];
 
-console.log(props.users);
 </script>
 
 <template>

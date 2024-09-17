@@ -87,11 +87,8 @@ const closeSidebar = () => {
                             ></v-list-item>
                         </template>
 
-                        <v-list-item
-                            :href="route('users.index')"
-                            title="Users"
-                            value="users"
-                        ></v-list-item>
+                        <v-list-item :href="route('users.index')" title="Users" value="users"></v-list-item>
+                        <v-list-item :href="route('user-targets.index')" title="User Targets" value="user-targets"></v-list-item>
                     </v-list-group>
 
 
