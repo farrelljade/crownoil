@@ -1,5 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import App from '@/App.vue';
 import AddOrder from '@/Pages/Orders/Components/AddOrder.vue';
 import {ref} from "vue";
@@ -17,6 +18,10 @@ const props = defineProps({
         required: true
     }
 });
+
+const redirectToUserPage = () => {
+    Inertia.get(route('dashboard.user', props.prospect.user.id));
+};
 </script>
 
 <template>
@@ -100,9 +105,11 @@ const props = defineProps({
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <CustomVTextField
+                                        class="cursor-pointer"
                                         prepend-icon="mdi-account"
                                         label="Account Manager"
                                         v-model="prospect.user.name"
+                                        @click="redirectToUserPage"
                                         readonly
                                     />
                                 </v-col>

@@ -65,6 +65,10 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    userCustomers: {
+        type: Array,
+        required: true,
+    },
 });
 </script>
 
@@ -113,6 +117,7 @@ const props = defineProps({
                             <div>
                                 <OrdersList
                                     :userOrders="userOrders"
+                                    :userCustomers="userCustomers"
                                 />
                             </div>
                         </template>

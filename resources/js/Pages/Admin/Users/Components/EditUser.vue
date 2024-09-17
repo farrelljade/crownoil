@@ -22,7 +22,7 @@ const formattedDate = computed(() => {
 });
 
 const form = useForm({
-    manager_id: props.managers.manager_id
+    manager_id: props.user.manager_id
 });
 
 const updateManager = () => {

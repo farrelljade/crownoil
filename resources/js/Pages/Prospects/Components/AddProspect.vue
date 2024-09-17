@@ -140,7 +140,7 @@ const submitForm = () => {
                     <v-btn
                         class="mr-4"
                         color="error"
-                        @click="dialog = false"
+                        @click="emit('close')"
                     >
                         Cancel
                     </v-btn>

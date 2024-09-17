@@ -10,6 +10,10 @@ const props = defineProps({
     userOrders: {
         type: Array,
         required: true
+    },
+    userCustomers: {
+        type: Array,
+        required: true
     }
 })
 
@@ -69,10 +73,24 @@ const latestOrdersHeaders = [
                                 mdi-pencil
                             </v-icon>
                         </Link>
-
                     </template>
                 </v-tooltip>
             </template>
         </v-data-table>
     </v-card-text>
+
+    <v-dialog v-model="dialog" max-width="auto">
+        <v-card>
+            <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                <span class="headline">New Order</span>
+            </v-card-title>
+            <v-card-text>
+                <AddOrder
+                    @close="dialog = false"
+                    :userCustomers="userCustomers"
+                    :fromUserPage="true"
+                />
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>

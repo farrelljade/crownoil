@@ -35,6 +35,9 @@ class DashboardController extends Controller
             ->where('user_id', $userId)
             ->orderBy('created_at')
             ->get();
+        $data['userCustomers'] = Prospect::query()
+            ->where('user_id', $userId)
+            ->get();
         $data['userTotalProfit'] = Order::query()
             ->where('user_id', $userId)
             ->sum('total_profit');

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Prospect;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,26 +33,13 @@ class OrderController extends Controller
         return Inertia::render('Orders/Create', $data);
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request): RedirectResponse
     {
-        $request->validate([
-            'prospect_id' => 'required|exists:prospects,id',
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-            'ppl_cost' => 'required|numeric|min:0',
-            'ppl_sell' => 'required|numeric|min:0',
-            'vat' => 'required|numeric|min:0',
-            'nett_total' => 'required|numeric|min:0',
-            'total' => 'required|numeric|min:0',
-            'ppl_profit' => 'required|numeric|min:0',
-            'total_profit' => 'required|numeric|min:0',
+        $validatedData = $request->validated();
 
-        ]);
+        $order = Order::create($validatedData);
 
-        Order::create($request->all());
-
-        return redirect()->route('orders.index');
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     private function getCommonData(): array

@@ -45,6 +45,14 @@ const props = defineProps({
         type: Array,
         default: null,
     },
+    userCustomers: {
+        type: Array,
+        required: true,
+    },
+    fromUserPage: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(['close']);
@@ -55,6 +63,14 @@ const pricing = {
     'Kerosene': { threshold: 10000, low: 0.68, high: 0.63 },
     'Gas Oil': { threshold: 10000, low: 0.85, high: 0.80 },
 };
+
+const prospectItems = computed(() => {
+    if (props.fromUserPage && props.userCustomers && props.userCustomers.length > 0) {
+        return props.userCustomers;
+    } else {
+        return props.prospects;
+    }
+});
 
 const pplCost = computed(() => {
     const productList = props.customerProducts && props.customerProducts.length > 0
@@ -161,7 +177,7 @@ const submitForm = () => {
                 <v-col cols="12" md="3">
                     <CustomVAutocomplete
                         v-model="form.prospect_id"
-                        :items="prospects"
+                        :items="prospectItems"
                         item-value="id"
                         item-title="name"
                         label="Company"
@@ -254,7 +270,7 @@ const submitForm = () => {
                     <v-btn
                         class="mr-4"
                         color="error"
-                        @click="dialog = false"
+                        @click="emit('close')"
                     >
                         Cancel
                     </v-btn>

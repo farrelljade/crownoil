@@ -83,13 +83,17 @@ const latestProspectsHeaders = [
         </v-data-table>
     </v-card-text>
 
-    <v-dialog v-model="dialog" max-width="900px">
+    <v-dialog v-model="dialog" max-width="auto">
         <v-card>
             <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                 <span class="headline">New Prospect</span>
             </v-card-title>
             <v-card-text>
-                <AddProspect @close="dialog = false" :leadSource="leadSource" :users="users" />
+                <AddProspect
+                    @close="dialog = false"
+                    :leadSource="leadSource"
+                    :users="users"
+                />
             </v-card-text>
         </v-card>
     </v-dialog>
