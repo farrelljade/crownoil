@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'manager_id');
     }
+
+    public function targets(): HasMany
+    {
+        return $this->hasMany(UserTarget::class);
+    }
 }

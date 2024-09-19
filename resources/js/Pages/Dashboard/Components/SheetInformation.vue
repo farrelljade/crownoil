@@ -35,6 +35,10 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    userProfitTarget: {
+        type: Number,
+        required: true,
+    },
 });
 
 const showDialogs = ref({
@@ -104,10 +108,10 @@ const customersByProfitHeaders = [
 
                 <div class="bottom-row">
                     <div class="bottom-left">
-                        Target - £3000
+                        Target - £{{ userProfitTarget.toLocaleString() }}
                     </div>
                     <div class="bottom-right">
-                        500% of target
+                        {{ ((userTotalProfitThisMonth / userProfitTarget) * 100).toFixed(2) }}%
                     </div>
                 </div>
             </v-sheet>

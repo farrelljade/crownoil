@@ -55,7 +55,7 @@ const latestProspectsHeaders = [
         <v-container fluid>
             <v-card class="mb-2 pa-3">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-                    <span>Prospects</span>
+                    Prospects
                     <v-tooltip text="Add Prospect">
                         <template v-slot:activator="{ props }">
                             <v-btn

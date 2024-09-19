@@ -32,14 +32,14 @@ const usersHeaders = [
 </script>
 
 <template>
-    <Head title="Users" />
+    <Head title="account" />
 
     <App>
         <v-container fluid>
             <v-card class="mb-2 pa-3">
                 <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
                     Users
-                    <v-tooltip text="Add New User">
+                    <v-tooltip text="Add New account!!!!!">
                         <template v-slot:activator="{ props }">
                             <v-btn
                                 density="compact"

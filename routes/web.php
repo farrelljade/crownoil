@@ -30,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('prospects', ProspectController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('users', UserController::class);
-    Route::resource('user-targets', UserTargetController::class);
+    Route::get('/user-targets', [UserTargetController::class, 'index'])->name('user-targets.index');
+    Route::post('/user-targets', [UserTargetController::class, 'store'])->name('user-targets.store');
 });
 
 require __DIR__.'/auth.php';

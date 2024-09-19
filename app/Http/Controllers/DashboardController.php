@@ -95,6 +95,13 @@ class DashboardController extends Controller
         $data['leadSource'] = LeadSource::query()
             ->orderBy('name', 'desc')
             ->get();
+        $data['userProfitTarget'] = User::with('targets')
+            ->where('id', $userId)
+            ->first()
+            ->targets
+            ->pluck('profit_target')
+            ->first();
+
 
         return $data;
     }
