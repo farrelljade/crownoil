@@ -25,5 +25,8 @@ class UserTarget extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    public function targetType(): BelongsTo
+    {
+        return $this->belongsTo(Target::class, 'target_id');
+    }
 }

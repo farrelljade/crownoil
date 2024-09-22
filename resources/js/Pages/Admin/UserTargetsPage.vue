@@ -15,12 +15,13 @@ const props = defineProps({
 });
 
 const targetFields = [
-    { title: 'Calls Target', key: 'calls_target' },
-    { title: 'Prospect Target', key: 'prospect_target' },
-    { title: 'Profit Target', key: 'profit_target' },
-    { title: 'Rejuve Target', key: 'rejuve_target' },
-    { title: 'IHO Target', key: 'iho_target' },
-    { title: 'Lubricant Target', key: 'lubricant_target' },
+    { title: 'Calls Target', key: 'calls' },
+    { title: 'Prospect Target', key: 'prospects' },
+    { title: 'Profit Target', key: 'profit' },
+    { title: 'Rejuve Target', key: 'rejuves' },
+    { title: 'IHO Target', key: 'iho' },
+    { title: 'Lubricant Target', key: 'lubricants' },
+    { title: 'Carbon Offsets', key: 'carbon_offsets'}
 ];
 
 const targets = ref({});

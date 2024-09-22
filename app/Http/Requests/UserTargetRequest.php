@@ -22,13 +22,14 @@ class UserTargetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'targets' => 'required|array',
-            'targets.*.calls_target' => 'nullable|integer|min:0',
-            'targets.*.prospect_target' => 'nullable|integer|min:0',
-            'targets.*.profit_target' => 'nullable|integer|min:0',
-            'targets.*.rejuve_target' => 'nullable|integer|min:0',
-            'targets.*.iho_target' => 'nullable|integer|min:0',
-            'targets.*.lubricant_target' => 'nullable|integer|min:0',
+            'user_id' => ['required', 'exists:users,id'],
+            'calls' => ['required', 'integer', 'min:0'],
+            'prospects' => ['required', 'integer', 'min:0'],
+            'profit' => ['required', 'numeric', 'min:0'],
+            'rejuves' => ['required', 'integer', 'min:0'],
+            'iho' => ['required', 'integer', 'min:0'],
+            'lubricants' => ['required', 'integer', 'min:0'],
+            'carbon_offsets' => ['required', 'integer', 'min:0'],
         ];
     }
 }
