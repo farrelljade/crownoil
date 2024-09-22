@@ -14,19 +14,19 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $data = $this->getCommonData($request, Auth::id());
+        $data = $this->dashboardData($request, Auth::id());
 
         return Inertia::render('Dashboard/UserPage', $data);
     }
 
     public function show($id)
     {
-        $data = $this->getCommonData(request(), $id);
+        $data = $this->dashboardData(request(), $id);
 
         return Inertia::render('Dashboard/UserPage', $data);
     }
 
-    private function getCommonData(Request $request, $userId): array
+    private function dashboardData(Request $request, $userId): array
     {
         $data = [];
 

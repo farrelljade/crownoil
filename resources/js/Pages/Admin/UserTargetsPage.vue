@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {ref, watch} from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import App from '@/App.vue';
 
@@ -43,18 +43,46 @@ const form = useForm({
 });
 
 const updateTargets = () => {
-    console.log('Form Data Before Submitting:', form.targets);
+    const updatedTargets = {};
 
-    form.post('/user-targets', {
-        preserveScroll: true,
-        onSuccess: () => {
-            console.log('Form successfully submitted');
-        },
-        onError: serverErrors => {
-            console.log('Error:', serverErrors);
+    Object.keys(form.targets).forEach(userId => {
+        updatedTargets[userId] = {};
+        const userTargets = form.targets[userId];
+        const originalUserTargets = props.existingTargets[userId] || {};
+
+        Object.keys(userTargets).forEach(key => {
+            if (userTargets[key] !== originalUserTargets[key]) {
+                // Only add modified targets
+                updatedTargets[userId][key] = userTargets[key];
+            }
+        });
+
+        // Remove empty target objects
+        if (Object.keys(updatedTargets[userId]).length === 0) {
+            delete updatedTargets[userId];
         }
     });
+
+    // If there are any changes, submit the form
+    if (Object.keys(updatedTargets).length > 0) {
+        form.post('/user-targets', {
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log('Form successfully submitted');
+            },
+            onError: serverErrors => {
+                console.log('Error:', serverErrors);
+            }
+        });
+    } else {
+        console.log('No changes detected');
+    }
 };
+
+
+watch(targets, (newTargets) => {
+    form.targets = newTargets;
+}, { deep: true });
 
 </script>
 

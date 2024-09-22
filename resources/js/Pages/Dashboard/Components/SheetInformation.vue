@@ -111,7 +111,7 @@ const customersByProfitHeaders = [
                         Target - £{{ userProfitTarget.toLocaleString() }}
                     </div>
                     <div class="bottom-right">
-                        {{ ((userTotalProfitThisMonth / userProfitTarget) * 100).toFixed(2) }}%
+                        {{ (userTotalProfitThisMonth / userProfitTarget * 100).toFixed(2) }}%
                     </div>
                 </div>
             </v-sheet>

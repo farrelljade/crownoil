@@ -25,6 +25,7 @@ const latestOrdersHeaders = [
     { title: 'PPL Sell', key: 'ppl_sell', sortable: false },
     { title: 'Total', key: 'total', sortable: false },
     { title: 'Total Profit', key: 'total_profit', sortable: true },
+    { title: 'Date', key: 'created_at', sortable: true },
     { title: 'Action', key: 'actions', sortable: false }
 ];
 </script>
@@ -64,6 +65,9 @@ const latestOrdersHeaders = [
             </template>
             <template v-slot:item.total_profit="{ item }">
                 £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+            </template>
+            <template v-slot:item.created_at="{ item }">
+                {{ new Date(item.created_at).toLocaleString('en-GB') }}
             </template>
             <template v-slot:item.actions="{ item }">
                 <v-tooltip text="Edit Order">

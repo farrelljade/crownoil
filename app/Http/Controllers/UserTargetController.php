@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserTarget;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -37,12 +38,16 @@ class UserTargetController extends Controller
 
         $validated = $request->validated();
 
-        foreach ($validated['targets'] as $userId => $targetData) {
-            UserTarget::updateOrCreate(
-                ['user_id' => $userId],
-                $targetData
-            );
-        }
+        DB::transaction(function () use ($validated) {
+            foreach ($validated['targets'] as $userId => $targetData) {
+                if (!empty($targetData)) {
+                    UserTarget::updateOrCreate(
+                        ['user_id' => $userId],
+                        $targetData
+                    );
+                }
+            }
+        });
 
         return redirect()->route('user-targets.index');
     }
