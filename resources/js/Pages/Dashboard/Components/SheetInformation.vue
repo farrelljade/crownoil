@@ -3,39 +3,39 @@ import {ref} from "vue";
 import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
-    userTotalProfitThisMonth: {
+    getUserTotalProfitThisMonth: {
         type: Number,
         required: true,
     },
-    userOrdersThisMonth: {
+    getUserOrdersThisMonth: {
         type: Array,
         required: true,
     },
-    userOrdersLastMonth: {
+    getUserOrdersLastMonth: {
         type: Array,
         required: true,
     },
-    userOrdersMonthBeforeLast: {
+    getUserOrdersMonthBeforeLast: {
         type: Array,
         required: true,
     },
-    customersThisMonthByProfit: {
+    getCustomersThisMonthByProfit: {
         type: Array,
         required: true,
     },
-    userTotalOrdersThisMonth: {
+    getUserTotalOrdersThisMonth: {
         type: Number,
         required: true,
     },
-    userTotalOrdersLastMonth: {
+    getUserTotalOrdersLastMonth: {
         type: Number,
         required: true,
     },
-    userTotalOrdersMonthBeforeLast: {
+    getUserTotalOrdersMonthBeforeLast: {
         type: Number,
         required: true,
     },
-    userProfitTarget: {
+    getUserProfitTarget: {
         type: Number,
         required: true,
     },
@@ -103,15 +103,15 @@ const customersByProfitHeaders = [
                 </div>
 
                 <div class="center-row">
-                    £{{ userTotalProfitThisMonth.toLocaleString() }}
+                    £{{ getUserTotalProfitThisMonth.toLocaleString() }}
                 </div>
 
                 <div class="bottom-row">
                     <div class="bottom-left">
-                        Target - £{{ userProfitTarget.toLocaleString() }}
+                        Target - £{{ getUserProfitTarget.toLocaleString() }}
                     </div>
                     <div class="bottom-right">
-                        {{ (userTotalProfitThisMonth / userProfitTarget * 100).toFixed(2) }}%
+                        {{ (getUserTotalProfitThisMonth / getUserProfitTarget * 100).toFixed(2) }}%
                     </div>
                 </div>
             </v-sheet>
@@ -142,7 +142,7 @@ const customersByProfitHeaders = [
                 </div>
 
                 <div class="center-row">
-                    {{ customersThisMonthByProfit[0].prospect.name }}
+                    {{ getCustomersThisMonthByProfit[0].prospect.name }}
                 </div>
 
                 <div class="bottom-row">
@@ -177,15 +177,15 @@ const customersByProfitHeaders = [
                 </div>
 
                 <div class="center-row">
-                    {{ userTotalOrdersThisMonth }}
+                    {{ getUserTotalOrdersThisMonth }}
                 </div>
 
                 <div class="bottom-row">
                     <div class="bottom-left">
-                        {{ lastMonth }} - {{ userTotalOrdersLastMonth || 0 }}
+                        {{ lastMonth }} - {{ getUserTotalOrdersLastMonth || 0 }}
                     </div>
                     <div class="bottom-right">
-                        {{ monthBeforeLast }} - {{ userTotalOrdersMonthBeforeLast || 0 }}
+                        {{ monthBeforeLast }} - {{ getUserTotalOrdersMonthBeforeLast || 0 }}
                     </div>
                 </div>
             </v-sheet>
@@ -211,7 +211,7 @@ const customersByProfitHeaders = [
                         <v-row dense>
                             <v-data-table
                                 :headers="monthProfitHeaders"
-                                :items="userOrdersThisMonth"
+                                :items="getUserOrdersThisMonth"
                             >
                                 <template v-slot:item.ppl_sell="{ item }">
                                     £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
@@ -241,7 +241,7 @@ const customersByProfitHeaders = [
                         <v-row dense>
                             <v-data-table
                                 :headers="monthProfitHeaders"
-                                :items="userOrdersLastMonth"
+                                :items="getUserOrdersLastMonth"
                             >
                                 <template v-slot:item.ppl_sell="{ item }">
                                     £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
@@ -271,7 +271,7 @@ const customersByProfitHeaders = [
                         <v-row dense>
                             <v-data-table
                                 :headers="monthProfitHeaders"
-                                :items="userOrdersMonthBeforeLast"
+                                :items="getUserOrdersMonthBeforeLast"
                             >
                                 <template v-slot:item.ppl_sell="{ item }">
                                     £{{ item.ppl_sell.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
@@ -320,7 +320,7 @@ const customersByProfitHeaders = [
                         <v-row dense>
                             <v-data-table
                                 :headers="customersByProfitHeaders"
-                                :items="customersThisMonthByProfit"
+                                :items="getCustomersThisMonthByProfit"
                             >
                                 <template v-slot:item.total_profit="{ item }">
                                     £{{ item.total_profit.toLocaleString() }}

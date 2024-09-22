@@ -25,7 +25,7 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-    userOrders: {
+    getUserOrders: {
         type: Array,
         required: true,
     },
@@ -33,15 +33,15 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    userTotalProfitThisMonth: {
+    getUserTotalProfitThisMonth: {
         type: Number,
         required: true,
     },
-    userOrdersThisMonth: {
+    getUserOrdersThisMonth: {
         type: Array,
         required: true,
     },
-    userOrdersLastMonth: {
+    getUserOrdersLastMonth: {
         type: Array,
         required: true,
     },
@@ -49,11 +49,11 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-    customersThisMonthByProfit: {
+    getCustomersThisMonthByProfit: {
         type: Array,
         required: true,
     },
-    userTotalOrdersThisMonth: {
+    getUserTotalOrdersThisMonth: {
         type: Number,
         required: true,
     },
@@ -65,11 +65,11 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    userCustomers: {
+    getUserCustomers: {
         type: Array,
         required: true,
     },
-    userProfitTarget: {
+    getUserProfitTarget: {
         type: Number,
         required: true,
     },
@@ -87,15 +87,15 @@ const props = defineProps({
                         <template v-slot:default>
                             <div>
                                 <SheetInformation
-                                    :userTotalProfitThisMonth="userTotalProfitThisMonth"
-                                    :userOrdersThisMonth="userOrdersThisMonth"
-                                    :userOrdersLastMonth="userOrdersLastMonth"
+                                    :getUserTotalProfitThisMonth="getUserTotalProfitThisMonth"
+                                    :getUserOrdersThisMonth="getUserOrdersThisMonth"
+                                    :getUserOrdersLastMonth="getUserOrdersLastMonth"
                                     :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"
-                                    :customersThisMonthByProfit="customersThisMonthByProfit"
-                                    :userTotalOrdersThisMonth="userTotalOrdersThisMonth"
+                                    :getCustomersThisMonthByProfit="getCustomersThisMonthByProfit"
+                                    :getUserTotalOrdersThisMonth="getUserTotalOrdersThisMonth"
                                     :userTotalOrdersLastMonth="userTotalOrdersLastMonth"
                                     :userTotalOrdersMonthBeforeLast="userTotalOrdersMonthBeforeLast"
-                                    :userProfitTarget="userProfitTarget"
+                                    :getUserProfitTarget="getUserProfitTarget"
                                 />
                             </div>
                         </template>
@@ -121,8 +121,8 @@ const props = defineProps({
                         <template v-slot:default>
                             <div>
                                 <OrdersList
-                                    :userOrders="userOrders"
-                                    :userCustomers="userCustomers"
+                                    :getUserOrders="getUserOrders"
+                                    :getUserCustomers="getUserCustomers"
                                 />
                             </div>
                         </template>

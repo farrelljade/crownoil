@@ -45,7 +45,7 @@ const props = defineProps({
         type: Array,
         default: null,
     },
-    userCustomers: {
+    getUserCustomers: {
         type: Array,
         required: true,
     },
@@ -65,8 +65,8 @@ const pricing = {
 };
 
 const prospectItems = computed(() => {
-    if (props.fromUserPage && props.userCustomers && props.userCustomers.length > 0) {
-        return props.userCustomers;
+    if (props.fromUserPage && props.getUserCustomers && props.getUserCustomers.length > 0) {
+        return props.getUserCustomers;
     } else {
         return props.prospects;
     }

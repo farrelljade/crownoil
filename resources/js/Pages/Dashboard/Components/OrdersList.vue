@@ -7,11 +7,11 @@ import {computed, ref} from "vue";
 const dialog = ref(false);
 
 const props = defineProps({
-    userOrders: {
+    getUserOrders: {
         type: Array,
         required: true
     },
-    userCustomers: {
+    getUserCustomers: {
         type: Array,
         required: true
     }
@@ -50,7 +50,7 @@ const latestOrdersHeaders = [
     <v-card-text>
         <v-data-table
             :headers="latestOrdersHeaders"
-            :items="props.userOrders"
+            :items="props.getUserOrders"
             items-per-page="5"
             class="elevation-3"
         >
@@ -91,7 +91,7 @@ const latestOrdersHeaders = [
             <v-card-text>
                 <AddOrder
                     @close="dialog = false"
-                    :userCustomers="userCustomers"
+                    :getUserCustomers="getUserCustomers"
                     :fromUserPage="true"
                 />
             </v-card-text>
