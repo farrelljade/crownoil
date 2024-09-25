@@ -137,20 +137,14 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="4">
-                    <v-btn
-                        class="mr-4"
-                        color="error"
-                        @click="emit('close')"
-                    >
-                        Cancel
-                    </v-btn>
-
-                    <v-btn
-                        type="submit"
-                        color="primary"
-                    >
-                        Submit
-                    </v-btn>
+                    <v-card-actions>
+                        <v-btn class="mr-4" @click="emit('close')">
+                            Cancel
+                        </v-btn>
+                        <v-btn type="submit" color="primary">
+                            Submit
+                        </v-btn>
+                    </v-card-actions>
                 </v-col>
             </v-row>
         </v-container>

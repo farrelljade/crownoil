@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/user-targets', [UserTargetController::class, 'index'])->name('user-targets.index');
     Route::post('/user-targets', [UserTargetController::class, 'store'])->name('user-targets.store');
+    Route::post('/prospects/reassign', [ProspectController::class, 'reassign'])->name('prospects.reassign');
 });
 
 require __DIR__.'/auth.php';

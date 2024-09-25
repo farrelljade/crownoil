@@ -108,7 +108,7 @@ const customersByProfitHeaders = [
 
                 <div class="bottom-row">
                     <div class="bottom-left">
-                        Target - £{{ getUserProfitTarget.toLocaleString() }}
+<!--                        Target - £{{ getUserProfitTarget.toLocaleString() }}-->
                     </div>
                     <div class="bottom-right">
                         {{ (getUserTotalProfitThisMonth / getUserProfitTarget * 100).toFixed(2) }}%

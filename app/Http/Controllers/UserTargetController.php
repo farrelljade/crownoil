@@ -15,6 +15,11 @@ class UserTargetController extends Controller
 {
     public function index(): Response
     {
+        $data = [
+            'users' => User::all(),
+            'userTargets' => UserTarget::with('user')->get(),
+        ];
+
         return Inertia::render('Admin/UserTargetsPage', $data);
     }
 

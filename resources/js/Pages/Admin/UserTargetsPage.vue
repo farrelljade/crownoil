@@ -8,7 +8,7 @@ const props = defineProps({
         type: Array,
         required: true
     },
-    existingTargets: {
+    userTargets: {
         type: Object,
         default: () => ({})
     }
@@ -28,7 +28,7 @@ const targets = ref({});
 
 // Initialize target data
 props.users.forEach(user => {
-    const userTargets = props.existingTargets[user.id] || {};
+    const userTargets = props.userTargets[user.id] || {};
     targets.value[user.id] = {
         calls_target: userTargets.calls_target || 0,
         prospect_target: userTargets.prospect_target || 0,
@@ -49,7 +49,7 @@ const updateTargets = () => {
     Object.keys(form.targets).forEach(userId => {
         updatedTargets[userId] = {};
         const userTargets = form.targets[userId];
-        const originalUserTargets = props.existingTargets[userId] || {};
+        const originalUserTargets = props.userTargets[userId] || {};
 
         Object.keys(userTargets).forEach(key => {
             if (userTargets[key] !== originalUserTargets[key]) {

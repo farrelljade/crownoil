@@ -4,8 +4,12 @@ import { computed, ref } from 'vue';
 import App from '@/App.vue';
 import AddProspect from '@/Pages/Prospects/Components/AddProspect.vue';
 import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
+import { Inertia } from "@inertiajs/inertia";
 
 const dialog = ref(false);
+const selectedProspects = ref([]);
+const reassignDialog = ref(false);
+const newUserId = ref(null);
 
 const props = defineProps({
     prospects: {
@@ -46,6 +50,31 @@ const latestProspectsHeaders = [
     { title: 'Lead Source', key: 'lead_source.name', sortable: false },
     { title: 'Action', key: 'actions', sortable: false }
 ];
+
+const openReassignDialog = () => {
+    reassignDialog.value = true;
+};
+
+const submitReassignment = () => {
+    if (!newUserId.value) {
+        return;
+    }
+
+    const prospectIds = selectedProspects.value;
+
+    console.log('Prospect IDs:', prospectIds);
+
+    Inertia.post(route('prospects.reassign'), {
+        prospect_ids: prospectIds,
+        new_user_id: newUserId.value
+    }, {
+        onSuccess: () => {
+            reassignDialog.value = false;
+            selectedProspects.value = [];
+            newUserId.value = null;
+        }
+    });
+};
 </script>
 
 <template>
@@ -126,11 +155,40 @@ const latestProspectsHeaders = [
 
             <v-card>
                 <v-card-text>
+                    <v-btn
+                        class="mb-2"
+                        color="primary"
+                        :disabled="selectedProspects.length === 0"
+                        @click="openReassignDialog"
+                    >
+                        Reassign
+                    </v-btn>
+
                     <v-data-table
                         :headers="latestProspectsHeaders"
                         :items="tableData"
                         class="elevation-3"
+                        show-select
+                        v-model="selectedProspects"
+                        item-key="id"
                     >
+                        <template v-slot:header.data-table-select="{ allSelected, selectAll, someSelected }">
+                            <v-checkbox-btn
+                                :indeterminate="someSelected && !allSelected"
+                                :model-value="allSelected"
+                                color="primary"
+                                @update:model-value="selectAll(!allSelected)"
+                            ></v-checkbox-btn>
+                        </template>
+
+                        <template v-slot:item.data-table-select="{ internalItem, isSelected, toggleSelect }">
+                            <v-checkbox-btn
+                                :model-value="isSelected(internalItem)"
+                                color="primary"
+                                @update:model-value="toggleSelect(internalItem)"
+                            ></v-checkbox-btn>
+                        </template>
+
                         <template v-slot:item.name="{ item }">
                             {{ item.name }}
                         </template>
@@ -170,6 +228,28 @@ const latestProspectsHeaders = [
                 </v-card-text>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="reassignDialog" max-width="500px">
+            <v-card>
+                <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
+                    <span class="headline">Reassign Prospects</span>
+                </v-card-title>
+                <v-card-text>
+                    <CustomVAutocomplete
+                        v-model="newUserId"
+                        label="Select New User"
+                        :items="users"
+                        item-value="id"
+                        item-title="name"
+                        hide-details
+                        clearable
+                    />
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn @click="reassignDialog = false">Cancel</v-btn>
+                    <v-btn color="primary" @click="submitReassignment">Reassign</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </App>
 </template>
-

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReassignProspectRequest;
 use App\Models\LeadSource;
 use App\Models\Product;
 use App\Models\Prospect;
@@ -88,4 +89,14 @@ class ProspectController extends Controller
         return $data;
     }
 
+    public function reassign(ReassignProspectRequest $request): RedirectResponse
+    {
+        $request->validated();
+
+        // Update the 'user_id' for the selected prospects
+        Prospect::whereIn('id', $request->prospect_ids)
+            ->update(['user_id' => $request->new_user_id]);
+
+        return redirect()->route('prospects.index');
+    }
 }

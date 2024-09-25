@@ -33,7 +33,7 @@ class DashboardController extends Controller
         $data['getUserTotalOrdersThisMonth'] = $this->dashboardService->getUserTotalOrdersThisMonth($userId);
         $data['getUserTotalOrdersLastMonth'] = $this->dashboardService->getUserTotalOrdersLastMonth($userId);
         $data['getUserTotalOrdersMonthBeforeLast'] = $this->dashboardService->getUserTotalOrdersMonthBeforeLast($userId);
-        $data['getUserProfitTarget'] = $this->dashboardService->getUserProfitTarget($userId);
+//        $data['getUserProfitTarget'] = $this->dashboardService->getUserProfitTarget($userId);
 
         return $data;
     }

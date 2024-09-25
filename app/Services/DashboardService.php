@@ -85,15 +85,15 @@ class DashboardService
             ->count();
     }
 
-    public function getUserProfitTarget($userId): float
-    {
-        return User::with('targets')
-            ->where('id', $userId)
-            ->first()
-            ->targets
-            ->pluck('profit_target')
-            ->first();
-    }
+//    public function getUserProfitTarget($userId): float
+//    {
+//        return User::with('targets')
+//            ->where('id', $userId)
+//            ->first()
+//            ->targets
+//            ->pluck('profit_target')
+//            ->first();
+//    }
 
     public function getUserOrders($userId): Collection
     {
