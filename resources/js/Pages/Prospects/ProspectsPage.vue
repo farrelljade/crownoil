@@ -1,14 +1,16 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import {computed, defineAsyncComponent, ref} from 'vue';
 import App from '@/App.vue';
 import AddProspect from '@/Pages/Prospects/Components/AddProspect.vue';
 import CustomVAutocomplete from "@/Components/CustomVAutocomplete.vue";
 import { Inertia } from "@inertiajs/inertia";
+import ConfirmDialog from "@/Components/ConfirmDialog.vue";
 
 const dialog = ref(false);
 const selectedProspects = ref([]);
 const reassignDialog = ref(false);
+const confirmReassignDialog = ref(false);
 const newUserId = ref(null);
 
 const props = defineProps({
@@ -56,24 +58,35 @@ const openReassignDialog = () => {
 };
 
 const submitReassignment = () => {
-    if (!newUserId.value) {
-        return;
-    }
-
     const prospectIds = selectedProspects.value;
-
-    console.log('Prospect IDs:', prospectIds);
 
     Inertia.post(route('prospects.reassign'), {
         prospect_ids: prospectIds,
         new_user_id: newUserId.value
     }, {
         onSuccess: () => {
-            reassignDialog.value = false;
             selectedProspects.value = [];
             newUserId.value = null;
         }
     });
+};
+
+const openConfirmDialog = () => {
+    if (!newUserId.value) {
+        return;
+    }
+
+    reassignDialog.value = false;
+    confirmReassignDialog.value = true;
+};
+
+const confirmReassign = () => {
+    submitReassignment();
+    confirmReassignDialog.value = false;
+};
+
+const cancelReassign = () => {
+    confirmReassignDialog.value = false;
 };
 </script>
 
@@ -247,9 +260,17 @@ const submitReassignment = () => {
                 </v-card-text>
                 <v-card-actions>
                     <v-btn @click="reassignDialog = false">Cancel</v-btn>
-                    <v-btn color="primary" @click="submitReassignment">Reassign</v-btn>
+                    <v-btn color="primary" @click="openConfirmDialog">Reassign</v-btn>
                 </v-card-actions>
             </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="confirmReassignDialog" max-width="500px">
+            <ConfirmDialog
+                text="Are you sure you want to reassign the selected prospect(s)?"
+                @onCancel="cancelReassign"
+                @confirm="confirmReassign"
+            />
         </v-dialog>
     </App>
 </template>

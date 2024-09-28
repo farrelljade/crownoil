@@ -13,6 +13,6 @@ class ProspectSeeder extends Seeder
      */
     public function run(): void
     {
-        Prospect::factory(10)->create();
+        Prospect::factory(70)->create();
     }
 }
