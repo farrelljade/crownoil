@@ -41,7 +41,7 @@ const redirectToUserPage = () => {
                 <v-col cols="12" md="5">
                     <v-card>
                         <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">
-                            Contact Details: {{ prospect.name }}
+                            {{ prospect.name }}
                         </v-card-title>
                         <v-card-text>
                             <v-row class="elevation-3">

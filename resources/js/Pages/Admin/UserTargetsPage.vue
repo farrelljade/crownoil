@@ -1,6 +1,6 @@
 <script setup>
 import {ref, watch} from 'vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head, useForm} from '@inertiajs/vue3';
 import App from '@/App.vue';
 
 const props = defineProps({
@@ -11,32 +11,24 @@ const props = defineProps({
     userTargets: {
         type: Object,
         default: () => ({})
+    },
+    targets: { // Prop for available targets
+        type: Array,
+        required: true
     }
 });
-
-const targetFields = [
-    { title: 'Calls Target', key: 'calls' },
-    { title: 'Prospect Target', key: 'prospects' },
-    { title: 'Profit Target', key: 'profit' },
-    { title: 'Rejuve Target', key: 'rejuves' },
-    { title: 'IHO Target', key: 'iho' },
-    { title: 'Lubricant Target', key: 'lubricants' },
-    { title: 'Carbon Offsets', key: 'carbon_offsets'}
-];
 
 const targets = ref({});
 
 // Initialize target data
 props.users.forEach(user => {
-    const userTargets = props.userTargets[user.id] || {};
-    targets.value[user.id] = {
-        calls_target: userTargets.calls_target || 0,
-        prospect_target: userTargets.prospect_target || 0,
-        profit_target: userTargets.profit_target || 0,
-        rejuve_target: userTargets.rejuve_target || 0,
-        iho_target: userTargets.iho_target || 0,
-        lubricant_target: userTargets.lubricant_target || 0,
-    };
+    targets.value[user.id] = {};
+
+    // Match targets based on the `target_id`
+    props.targets.forEach(target => {
+        const userTarget = props.userTargets[user.id]?.find(t => t.target_id === target.id) || {};
+        targets.value[user.id][target.id] = userTarget.value || 0;
+    });
 });
 
 const form = useForm({
@@ -44,30 +36,30 @@ const form = useForm({
 });
 
 const updateTargets = () => {
-    const updatedTargets = {};
+    const updatedTargets = [];
 
     Object.keys(form.targets).forEach(userId => {
-        updatedTargets[userId] = {};
         const userTargets = form.targets[userId];
-        const originalUserTargets = props.userTargets[userId] || {};
+        const originalUserTargets = props.userTargets[userId] || [];
 
-        Object.keys(userTargets).forEach(key => {
-            if (userTargets[key] !== originalUserTargets[key]) {
-                // Only add modified targets
-                updatedTargets[userId][key] = userTargets[key];
+        Object.keys(userTargets).forEach(targetId => {
+            const newValue = userTargets[targetId];
+            const original = originalUserTargets.find(t => t.target_id === parseInt(targetId)) || {};
+
+            if (newValue !== original.value) {
+                updatedTargets.push({
+                    user_id: parseInt(userId),
+                    target_id: parseInt(targetId),
+                    value: newValue
+                });
             }
         });
-
-        // Remove empty target objects
-        if (Object.keys(updatedTargets[userId]).length === 0) {
-            delete updatedTargets[userId];
-        }
     });
 
-    // If there are any changes, submit the form
-    if (Object.keys(updatedTargets).length > 0) {
+    if (updatedTargets.length > 0) {
         form.post('/user-targets', {
             preserveScroll: true,
+            data: {targets: updatedTargets},
             onSuccess: () => {
                 console.log('Form successfully submitted');
             },
@@ -80,10 +72,9 @@ const updateTargets = () => {
     }
 };
 
-
 watch(targets, (newTargets) => {
     form.targets = newTargets;
-}, { deep: true });
+}, {deep: true});
 
 </script>
 
@@ -100,15 +91,15 @@ watch(targets, (newTargets) => {
                         <thead>
                         <tr>
                             <th>User Name</th>
-                            <th v-for="field in targetFields" :key="field.key">{{ field.title }}</th>
+                            <th v-for="target in targets" :key="target.id">{{ target.name }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="user in users" :key="user.id">
                             <td>{{ user.name }}</td>
-                            <td v-for="field in targetFields" :key="field.key">
+                            <td v-for="target in targets" :key="target.id">
                                 <v-text-field
-                                    v-model="form.targets[user.id][field.key]"
+                                    v-model="form.targets[user.id][target.id]"
                                     hide-details
                                     density="compact"
                                     outlined

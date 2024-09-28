@@ -200,7 +200,7 @@ const customersByProfitHeaders = [
             <v-tabs
                 v-model="tab"
                 bg-color="primary"
-                >
+            >
                 <v-tab value="thisMonthsProfit">{{ currentMonth }}</v-tab>
                 <v-tab value="lastMonthsProfit">{{ lastMonth }}</v-tab>
                 <v-tab value="monthBeforeLastProfit">{{ monthBeforeLast }}</v-tab>

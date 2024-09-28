@@ -23,13 +23,13 @@ class UserTargetRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-            'calls' => ['required', 'integer', 'min:0'],
-            'prospects' => ['required', 'integer', 'min:0'],
-            'profit' => ['required', 'numeric', 'min:0'],
-            'rejuves' => ['required', 'integer', 'min:0'],
-            'iho' => ['required', 'integer', 'min:0'],
-            'lubricants' => ['required', 'integer', 'min:0'],
-            'carbon_offsets' => ['required', 'integer', 'min:0'],
+            'calls' => ['nullable', 'integer', 'min:0'],
+            'prospects' => ['nullable', 'integer', 'min:0'],
+            'profit' => ['nullable', 'numeric', 'min:0'],
+            'rejuves' => ['nullable', 'integer', 'min:0'],
+            'iho' => ['nullable', 'integer', 'min:0'],
+            'lubricants' => ['nullable', 'integer', 'min:0'],
+            'carbon_offsets' => ['nullable', 'integer', 'min:0'],
         ];
     }
 }
