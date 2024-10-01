@@ -23,6 +23,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    getCustomersLastMonthByProfit: {
+        type: Array,
+        required: true,
+    },
     getUserTotalOrdersThisMonth: {
         type: Number,
         required: true,
@@ -142,7 +146,7 @@ const customersByProfitHeaders = [
                 </div>
 
                 <div class="center-row">
-                    {{ getCustomersThisMonthByProfit[0].prospect.name }}
+                    {{ getCustomersThisMonthByProfit.length > 0 ? getCustomersThisMonthByProfit[0].prospect.name : 'No Orders' }}
                 </div>
 
                 <div class="bottom-row">
@@ -321,6 +325,30 @@ const customersByProfitHeaders = [
                             <v-data-table
                                 :headers="customersByProfitHeaders"
                                 :items="getCustomersThisMonthByProfit"
+                            >
+                                <template v-slot:item.total_profit="{ item }">
+                                    £{{ item.total_profit.toLocaleString() }}
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip text="Go To Profile" left>
+                                        <template v-slot:activator="{ props }">
+                                            <Link :href="route('prospects.show', item.prospect.id)">
+                                                <v-icon color="green" v-bind="props">
+                                                    mdi-location-enter
+                                                </v-icon>
+                                            </Link>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-row>
+                    </v-tabs-window-item>
+
+                    <v-tabs-window-item value="lastMonthsHighestCustomer">
+                        <v-row dense>
+                            <v-data-table
+                                :headers="customersByProfitHeaders"
+                                :items="getCustomersLastMonthByProfit"
                             >
                                 <template v-slot:item.total_profit="{ item }">
                                     £{{ item.total_profit.toLocaleString() }}

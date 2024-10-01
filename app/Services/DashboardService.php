@@ -61,6 +61,19 @@ class DashboardService
             ->get();
     }
 
+    public function getCustomersLastMonthByProfit($userId): Collection
+    {
+        return Order::query()
+            ->with(['product', 'prospect', 'user'])
+            ->selectRaw('prospect_id, sum(total_profit) as total_profit')
+            ->selectRaw('prospect_id, count(prospect_id) as total_orders')
+            ->where('user_id', $userId)
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->groupBy('prospect_id')
+            ->orderBy('total_profit', 'desc')
+            ->get();
+    }
+
     public function getUserTotalOrdersMonthBeforeLast($userId): int
     {
         return Order::query()
@@ -100,7 +113,7 @@ class DashboardService
         return Order::query()
             ->with(['product', 'prospect', 'user'])
             ->where('user_id', $userId)
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'desc')
             ->get();
     }
 

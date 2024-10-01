@@ -55,7 +55,15 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    getCustomersLastMonthByProfit: {
+        type: Array,
+        required: true,
+    },
     getUserTotalOrdersThisMonth: {
+        type: Number,
+        required: true,
+    },
+    getUserTotalOrdersLastMonth: {
         type: Number,
         required: true,
     },
@@ -94,7 +102,9 @@ const props = defineProps({
                                     :getUserOrdersLastMonth="getUserOrdersLastMonth"
                                     :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"
                                     :getCustomersThisMonthByProfit="getCustomersThisMonthByProfit"
+                                    :getCustomersLastMonthByProfit="getCustomersLastMonthByProfit"
                                     :getUserTotalOrdersThisMonth="getUserTotalOrdersThisMonth"
+                                    :getUserTotalOrdersLastMonth="getUserTotalOrdersLastMonth"
                                     :userTotalOrdersLastMonth="userTotalOrdersLastMonth"
                                     :userTotalOrdersMonthBeforeLast="userTotalOrdersMonthBeforeLast"
                                     :getUserProfitTarget="getUserProfitTarget"
