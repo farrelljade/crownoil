@@ -7,6 +7,14 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    getUserTotalProfitLastMonth: {
+        type: Number,
+        required: true
+    },
+    getUserTotalProfitMonthBeforeLast: {
+        type: Number,
+        required: true
+    },
     getUserOrdersThisMonth: {
         type: Array,
         required: true,
@@ -112,10 +120,11 @@ const customersByProfitHeaders = [
 
                 <div class="bottom-row">
                     <div class="bottom-left">
-<!--                        Target - £{{ getUserProfitTarget.toLocaleString() }}-->
+                        {{ lastMonth }}: £{{ getUserTotalProfitLastMonth.toLocaleString() }}
                     </div>
                     <div class="bottom-right">
-                        {{ (getUserTotalProfitThisMonth / getUserProfitTarget * 100).toFixed(2) }}%
+                        {{ monthBeforeLast }}: £{{ getUserTotalProfitMonthBeforeLast.toLocaleString() }}
+<!--                        {{ (getUserTotalProfitThisMonth / getUserProfitTarget * 100).toFixed(2) }}-->
                     </div>
                 </div>
             </v-sheet>

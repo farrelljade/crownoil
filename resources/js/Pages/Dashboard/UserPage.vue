@@ -39,6 +39,14 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    getUserTotalProfitLastMonth: {
+        type: Number,
+        required: true
+    },
+    getUserTotalProfitMonthBeforeLast: {
+        type: Number,
+        required: true
+    },
     getUserOrdersThisMonth: {
         type: Array,
         required: true,
@@ -98,6 +106,8 @@ const props = defineProps({
                             <div>
                                 <SheetInformation
                                     :getUserTotalProfitThisMonth="getUserTotalProfitThisMonth"
+                                    :getUserTotalProfitLastMonth="getUserTotalProfitLastMonth"
+                                    :getUserTotalProfitMonthBeforeLast="getUserTotalProfitMonthBeforeLast"
                                     :getUserOrdersThisMonth="getUserOrdersThisMonth"
                                     :getUserOrdersLastMonth="getUserOrdersLastMonth"
                                     :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"

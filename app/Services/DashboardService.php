@@ -18,6 +18,22 @@ class DashboardService
             ->sum('total_profit');
     }
 
+    public function getUserTotalProfitLastMonth($userId): float
+    {
+        return Order::query()
+            ->where('user_id', $userId)
+            ->whereMonth('created_at', now()->month - 1)
+            ->sum('total_profit');
+    }
+
+    public function getUserTotalProfitMonthBeforeLast($userId): float
+    {
+        return Order::query()
+            ->where('user_id', $userId)
+            ->whereMonth('created_at', now()->month -2)
+            ->sum('total_profit');
+    }
+
     public function getUserOrdersThisMonth($userId): Collection
     {
         return Order::query()

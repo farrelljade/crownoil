@@ -62,6 +62,7 @@ const pricing = {
     'IHO': { threshold: 10000, low: 0.70, high: 0.65 },
     'Kerosene': { threshold: 10000, low: 0.68, high: 0.63 },
     'Gas Oil': { threshold: 10000, low: 0.85, high: 0.80 },
+    'HVO': { threshold: 10000, low: 1.35, high: 1.30 },
 };
 
 const prospectItems = computed(() => {
