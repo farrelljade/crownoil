@@ -10,6 +10,10 @@ const ProspectList = defineAsyncComponent(
     () => import('@/Pages/Dashboard/Components/ProspectList.vue')
 );
 
+const CustomerList = defineAsyncComponent(
+    () => import('@/Pages/Dashboard/Components/CustomerList.vue')
+)
+
 const OrdersList = defineAsyncComponent(
     () => import('@/Pages/Dashboard/Components/OrdersList.vue')
 );
@@ -18,6 +22,10 @@ const props = defineProps({
     prospects: {
         type: Array,
         required: true,
+    },
+    getUserCustomerList: {
+        type: Array,
+        required: true
     },
     users: {
         type: Array,
@@ -55,7 +63,7 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-    userOrdersMonthBeforeLast: {
+    getUserOrdersMonthBeforeLast: {
         type: Array,
         required: true,
     },
@@ -75,13 +83,9 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    userTotalOrdersLastMonth: {
+    getUserTotalOrdersMonthBeforeLast: {
         type: Number,
-        required: true,
-    },
-    userTotalOrdersMonthBeforeLast: {
-        type: Number,
-        required: true,
+        required: true
     },
     getUserCustomers: {
         type: Array,
@@ -110,13 +114,12 @@ const props = defineProps({
                                     :getUserTotalProfitMonthBeforeLast="getUserTotalProfitMonthBeforeLast"
                                     :getUserOrdersThisMonth="getUserOrdersThisMonth"
                                     :getUserOrdersLastMonth="getUserOrdersLastMonth"
-                                    :userOrdersMonthBeforeLast="userOrdersMonthBeforeLast"
+                                    :getUserOrdersMonthBeforeLast="getUserOrdersMonthBeforeLast"
                                     :getCustomersThisMonthByProfit="getCustomersThisMonthByProfit"
                                     :getCustomersLastMonthByProfit="getCustomersLastMonthByProfit"
                                     :getUserTotalOrdersThisMonth="getUserTotalOrdersThisMonth"
                                     :getUserTotalOrdersLastMonth="getUserTotalOrdersLastMonth"
-                                    :userTotalOrdersLastMonth="userTotalOrdersLastMonth"
-                                    :userTotalOrdersMonthBeforeLast="userTotalOrdersMonthBeforeLast"
+                                    :getUserTotalOrdersMonthBeforeLast="getUserTotalOrdersMonthBeforeLast"
                                     :getUserProfitTarget="getUserProfitTarget"
                                 />
                             </div>
@@ -143,6 +146,16 @@ const props = defineProps({
                                                 :prospects="prospects"
                                                 :users="users"
                                                 :leadSource="leadSource"
+                                            />
+                                        </div>
+                                    </template>
+                                </v-tabs-window-item>
+
+                                <v-tabs-window-item value="customerList">
+                                    <template v-slot:default>
+                                        <div>
+                                            <CustomerList
+                                                :getUserCustomerList="getUserCustomerList"
                                             />
                                         </div>
                                     </template>

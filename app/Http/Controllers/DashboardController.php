@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
     private function dashboardData(Request $request, $userId): array
     {
-        $data = $this->getCommonData($request, $userId);
+        $data = $this->getData($request, $userId);
         $data['getUserOrders'] = $this->dashboardService->getUserOrders($userId);
         $data['getUserCustomers'] = $this->dashboardService->getUserCustomers($userId);
         $data['getUserTotalProfitThisMonth'] = $this->dashboardService->getUserTotalProfitThisMonth($userId);
@@ -36,6 +36,7 @@ class DashboardController extends Controller
         $data['getUserTotalOrdersThisMonth'] = $this->dashboardService->getUserTotalOrdersThisMonth($userId);
         $data['getUserTotalOrdersLastMonth'] = $this->dashboardService->getUserTotalOrdersLastMonth($userId);
         $data['getUserTotalOrdersMonthBeforeLast'] = $this->dashboardService->getUserTotalOrdersMonthBeforeLast($userId);
+        $data['getUserCustomerList'] = $this->dashboardService->getUserCustomerList($userId);
 //        $data['getUserProfitTarget'] = $this->dashboardService->getUserProfitTarget($userId);
 
         return $data;
@@ -54,12 +55,12 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/UserPage', $data);
     }
 
-    private function getCommonData(Request $request, $userId): array
+    private function getData(Request $request, $userId): array
     {
-        $data = [];
         $data['prospects'] = Prospect::query()
-            ->with('leadSource')
+            ->with(['leadSource', 'orders'])
             ->where('user_id', $userId)
+            ->whereDoesntHave('orders')
             ->get()
             ->toArray();
         $data['users'] = User::query()
@@ -68,13 +69,6 @@ class DashboardController extends Controller
         $data['leadSource'] = LeadSource::query()
             ->orderBy('name', 'desc')
             ->get();
-        $data['userProfitTarget'] = User::with('targets')
-            ->where('id', $userId)
-            ->first()
-            ->targets
-            ->pluck('profit_target')
-            ->first();
-
 
         return $data;
     }

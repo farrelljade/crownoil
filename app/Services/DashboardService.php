@@ -114,6 +114,18 @@ class DashboardService
             ->count();
     }
 
+    public function getUserCustomerList($userId): array
+    {
+        return Prospect::query()
+            ->with(['orders' => function ($query) {
+                $query->latest();
+            }, 'orders.product'])
+            ->where('user_id', $userId)
+            ->whereHas('orders')
+            ->get()
+            ->toArray();
+    }
+
 //    public function getUserProfitTarget($userId): float
 //    {
 //        return User::with('targets')

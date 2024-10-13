@@ -7,8 +7,6 @@ const dialog = ref(false);
 
 const { props: pageProps } = usePage();
 
-const user = computed(() => pageProps.auth.user);
-
 const props = defineProps({
     prospects: {
         type: Array,
@@ -45,22 +43,6 @@ const latestProspectsHeaders = [
 
 <template>
     <Head title="Prospects" />
-
-<!--    <v-card-title class="bg-primary mb-5 d-flex justify-space-between align-center">-->
-<!--        <span>Prospect List</span>-->
-<!--        <v-tooltip text="Add Prospect">-->
-<!--            <template v-slot:activator="{ props }">-->
-<!--                <v-btn-->
-<!--                    density="compact"-->
-<!--                    color="primary"-->
-<!--                    icon="mdi-plus"-->
-<!--                    :="props"-->
-<!--                    @click="dialog = true"-->
-<!--                >-->
-<!--                </v-btn>-->
-<!--            </template>-->
-<!--        </v-tooltip>-->
-<!--    </v-card-title>-->
 
     <v-card-text>
         <v-data-table
