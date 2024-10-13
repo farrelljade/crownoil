@@ -47,7 +47,7 @@ const redirectToUserPage = () => {
                             <v-row class="elevation-3">
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-home-floor-1"
                                         label="Line 1"
                                         v-model="prospect.address.line_1"
@@ -56,7 +56,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-home-floor-2"
                                         label="Line 2"
                                         v-model="prospect.address.line_2"
@@ -66,7 +66,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-city"
                                         label="City"
                                         v-model="prospect.address.city"
@@ -75,7 +75,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-image-area"
                                         label="County"
                                         v-model="prospect.address.county"
@@ -85,7 +85,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-post"
                                         label="Postcode"
                                         v-model="prospect.address.postcode"
@@ -94,7 +94,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-phone"
                                         label="Tel"
                                         v-model="prospect.number"
@@ -103,7 +103,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         prepend-icon="mdi-email"
                                         label="Email"
                                         v-model="prospect.email"
@@ -112,7 +112,7 @@ const redirectToUserPage = () => {
                                 </v-col>
                                 <v-col cols="12" md="6">
                                     <v-text-field
-                                        variant="outlined"
+                                        variant="underlined"
                                         class="cursor-pointer"
                                         prepend-icon="mdi-account"
                                         label="Account Manager"

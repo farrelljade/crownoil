@@ -9,8 +9,9 @@ const props = defineProps({
 })
 
 const latestCustomerHeaders = [
-    { title: 'Company Name', key: 'name', sortable: false },
+    { title: 'Company Name', key: 'name', sortable: true },
     { title: 'Product', key: 'orders[0].product.name', sortable: false},
+    { title: 'Total', key: 'orders[0].total', sortable: false },
     { title: 'Latest Order', key: 'orders[0].created_at', sortable: false },
     { title:'Action', key: 'actions', sortable: false }
 ];
@@ -22,10 +23,13 @@ const latestCustomerHeaders = [
     <v-card-text>
         <v-data-table
             :headers="latestCustomerHeaders"
-            :items="props.getUserCustomerList"
+            :items="getUserCustomerList"
             :items-per-page="5"
             class="elevation-3"
         >
+            <template v-slot:item.orders[0].total="{ item }">
+                £{{ item.orders[0]?.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+            </template>
             <template v-slot:item.orders[0].created_at="{ item }">
                 {{ new Date(item.orders[0]?.created_at).toLocaleString('en-GB') }}
             </template>

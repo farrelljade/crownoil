@@ -2,7 +2,7 @@
 import { defineProps } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import AddOrder from "@/Pages/Orders/Components/AddOrder.vue";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 
 const dialog = ref(false);
 
@@ -70,7 +70,7 @@ const latestOrdersHeaders = [
                 {{ new Date(item.created_at).toLocaleString('en-GB') }}
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-tooltip text="Edit Order">
+                <v-tooltip text="Go to order">
                     <template v-slot:activator="{ props }">
                         <Link :href="route('prospects.show', item.id)">
                             <v-icon color="orange" :="props">
