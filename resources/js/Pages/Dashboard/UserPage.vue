@@ -23,6 +23,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    order: {
+        type: Object,
+        required: true
+    },
     getUserCustomerList: {
         type: Array,
         required: true
@@ -171,6 +175,7 @@ const props = defineProps({
                                 <OrdersList
                                     :getUserOrders="getUserOrders"
                                     :getUserCustomers="getUserCustomers"
+                                    :order="order"
                                 />
                             </div>
                         </template>

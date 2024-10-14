@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-targets', [UserTargetController::class, 'index'])->name('user-targets.index');
     Route::post('/user-targets', [UserTargetController::class, 'store'])->name('user-targets.store');
     Route::post('/prospects/reassign', [ProspectController::class, 'reassign'])->name('prospects.reassign');
+
+    Route::get('/orders/{id}/details', [OrderController::class, 'getOrderDetails'])->name('orders.details');
 });
 
 require __DIR__.'/auth.php';

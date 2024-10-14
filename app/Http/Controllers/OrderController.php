@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Prospect;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,6 +25,23 @@ class OrderController extends Controller
             ->get();
 
         return Inertia::render('Orders/OrdersPage', $data);
+    }
+
+    public function getOrderDetails($id): JsonResponse
+    {
+        try {
+            $order = Order::query()
+                ->with(['product', 'prospect', 'user'])
+                ->findOrFail($id);
+
+            return response()->json([
+                'order' => $order,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Order not found.',
+            ], 404);
+        }
     }
 
     public function create(Request $request): Response
