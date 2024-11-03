@@ -45,12 +45,13 @@ const tableData = computed(() => {
 });
 
 const latestOrdersHeaders = [
-    { title: 'Assigned User', key: 'user.name', sortable: false },
+    { title: 'Order Number', key: 'id', sortable: false },
     { title: 'Company', key: 'prospect.name', sortable: false },
     { title: 'Product', key: 'product.name', sortable: false },
     { title: 'LTS', key: 'quantity', sortable: false },
     { title: 'PPL', key: 'ppl_sell', sortable: false },
     { title: 'Total', key: 'total', sortable: false },
+    { title: 'Assigned User', key: 'user.name', sortable: false },
     { title: 'Created At', key: 'created_at', sortable: true },
     { title: 'Action', key: 'actions', sortable: false }
 ];

@@ -35,6 +35,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    getCustomersMonthBeforeLast: {
+        type: Array,
+        required: true,
+    },
     getUserTotalOrdersThisMonth: {
         type: Number,
         required: true,
@@ -361,6 +365,30 @@ const customersByProfitHeaders = [
                             >
                                 <template v-slot:item.total_profit="{ item }">
                                     £{{ item.total_profit.toLocaleString() }}
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip text="Go To Profile" left>
+                                        <template v-slot:activator="{ props }">
+                                            <Link :href="route('prospects.show', item.prospect.id)">
+                                                <v-icon color="green" v-bind="props">
+                                                    mdi-location-enter
+                                                </v-icon>
+                                            </Link>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-row>
+                    </v-tabs-window-item>
+
+                    <v-tabs-window-item value="monthBeforeLastHighestCustomer">
+                        <v-row dense>
+                            <v-data-table
+                                :headers="customersByProfitHeaders"
+                                :items="getCustomersMonthBeforeLast"
+                            >
+                                <template v-slot:item.total_profit="{ item }">
+                                    £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
                                 </template>
                                 <template v-slot:item.actions="{ item }">
                                     <v-tooltip text="Go To Profile" left>
