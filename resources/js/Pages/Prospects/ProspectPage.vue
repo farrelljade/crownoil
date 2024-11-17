@@ -29,14 +29,6 @@ const redirectToUserPage = () => {
 
     <App>
         <v-container fluid>
-            <v-breadcrumbs
-                class="bg-primary mb-5"
-                :items="['Foo', 'Bar', 'Fizz']"
-            >
-                <template v-slot:divider>
-                    <v-icon icon="mdi-chevron-right"></v-icon>
-                </template>
-            </v-breadcrumbs>
             <v-row>
                 <v-col cols="12" md="5">
                     <v-card>

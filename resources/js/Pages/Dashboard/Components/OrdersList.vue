@@ -66,6 +66,7 @@ const showOrderHeader = [
     { title: 'Total Cost', key: 'total', sortable: false },
     { title: 'PPL Profit', key: 'ppl_profit', sortable: false },
     { title: 'Total Profit', key: 'total_profit', sortable: false },
+    { title: 'Date', key: 'created_at', sortable: false}
 ];
 
 const orderData = computed(() => {
@@ -116,7 +117,7 @@ const orderData = computed(() => {
             <template v-slot:item.actions="{ item }">
                 <v-tooltip text="View order">
                     <template v-slot:activator="{ props }">
-                        <v-btn @click="openOrderDialog(item.id)">
+                        <v-btn variant="flat" @click="openOrderDialog(item.id)">
                             <v-icon color="orange" :="props">
                                 mdi-pencil
                             </v-icon>
@@ -182,7 +183,12 @@ const orderData = computed(() => {
                         £{{ item.ppl_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
                     </template>
                     <template v-slot:item.total_profit="{ item }">
-                        <b>£{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}</b>
+                        <b :style="{ color: item.total_profit > 0 ? 'green' : 'red'}">
+                            £{{ item.total_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+                        </b>
+                    </template>
+                    <template v-slot:item.created_at="{ item }">
+                        {{ new Date(item.created_at).toLocaleString('en-GB') }}
                     </template>
                 </v-data-table>
             </v-card-text>

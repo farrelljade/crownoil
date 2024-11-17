@@ -38,7 +38,7 @@ const props = defineProps({
         default: null,
     },
     assignedUserName: {
-        type: Object,
+        type: Array,
         default: null,
     },
     customerProducts: {
@@ -120,6 +120,10 @@ const totalProfit = computed(() => {
     return (form.quantity * form.ppl_profit).toFixed(2);
 });
 
+const userFromProspectPage = computed(() => !!props.assignedUserName);
+
+const prospectFromProspectPage = computed(() => !!props.prospectName);
+
 watch(pplCost, (newPplCost) => {
     form.ppl_cost = newPplCost;
 });
@@ -176,9 +180,10 @@ const submitForm = () => {
         <v-container fluid>
             <v-row>
                 <v-col cols="12" md="3">
-                    <CustomVAutocomplete
+                    <v-autocomplete
+                        variant="underlined"
                         v-model="form.prospect_id"
-                        :items="prospectItems"
+                        :items="prospectFromProspectPage ? [props.prospectName] : prospectItems"
                         item-value="id"
                         item-title="name"
                         label="Company"
@@ -186,9 +191,10 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVAutocomplete
+                    <v-autocomplete
+                        variant="underlined"
                         v-model="form.user_id"
-                        :items="users"
+                        :items="userFromProspectPage ? [props.assignedUserName] : users"
                         item-value="id"
                         item-title="name"
                         label="Assigned User"
@@ -196,7 +202,8 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVAutocomplete
+                    <v-autocomplete
+                        variant="underlined"
                         v-model="form.product_id"
                         :items="customerProducts || products"
                         item-value="id"
@@ -206,14 +213,16 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.quantity"
                         label="Quantity"
                         required
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.ppl_cost"
                         :value="pplCost"
                         label="PPL Cost"
@@ -221,14 +230,16 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.ppl_sell"
                         label="PPL Sell"
                         required
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.vat"
                         :value="vat"
                         label="VAT"
@@ -236,7 +247,8 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.nett_total"
                         :value="nettTotal"
                         label="Nett Total"
@@ -244,7 +256,8 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.total"
                         :value="totalCost"
                         label="Total"
@@ -252,7 +265,8 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.ppl_profit"
                         :value="pplProfit"
                         label="PPL Profit"
@@ -260,7 +274,8 @@ const submitForm = () => {
                     />
                 </v-col>
                 <v-col cols="12" md="3">
-                    <CustomVTextField
+                    <v-text-field
+                        variant="underlined"
                         v-model="form.total_profit"
                         :value="totalProfit"
                         label="Total Profit"
