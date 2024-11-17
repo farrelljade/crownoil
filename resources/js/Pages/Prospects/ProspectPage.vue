@@ -5,6 +5,7 @@ import App from '@/App.vue';
 import AddOrder from '@/Pages/Orders/Components/AddOrder.vue';
 import {ref} from "vue";
 import CustomVTextField from "@/Components/CustomVTextField.vue";
+import AccountTabs from "@/Pages/Prospects/AccountTabs.vue";
 
 const dialog = ref(false);
 
@@ -14,6 +15,10 @@ const props = defineProps({
         required: true
     },
     products: {
+        type: Array,
+        required: true
+    },
+    customer: {
         type: Array,
         required: true
     }
@@ -29,6 +34,9 @@ const redirectToUserPage = () => {
 
     <App>
         <v-container fluid>
+            <account-tabs
+                :customer="customer"
+            />
             <v-row>
                 <v-col cols="12" md="5">
                     <v-card>
